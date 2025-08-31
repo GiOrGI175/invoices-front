@@ -4,27 +4,33 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className='w-[800px] h-[100dvh] flex flex-col justify-between'>
-      <div>
-        <Image src='assets/svg/Logo.svg' width={40} height={40} alt='Logo' />
-        <div />
+    <header className='fixed w-[103px] h-[100dvh] flex flex-col justify-between items-center rounded-br-[20px] rounded-tr-[20px] bg-[#373B53]'>
+      <div className='relative w-[103px] h-[103px] flex justify-center items-center bg-[#7C5DFA] rounded-br-[20px] rounded-tr-[20px] overflow-hidden '>
+        <Image
+          src='/assets/svg/Logo.svg'
+          width={40}
+          height={40}
+          alt='Logo'
+          className='relative z-20'
+        />
+        <div className='absolute w-[103px] h-[103px] top-[50%] rounded-tl-[20px] bg-[#9277FF] z-10' />
       </div>
 
-      <div>
-        <button>
+      <div className='flex flex-col justify-between items-center'>
+        <button className='pb-[32px] w-[103px] flex justify-center border-b-[1px] border-[#494E6E]'>
           <Image
-            src='assets/svg/moon.scg'
+            src='/assets/svg/moon.svg'
             width={20}
             height={20}
             alt='dark Mode'
           />
         </button>
-        <button>
+        <button className='my-[24px]'>
           <Image
-            src='assets/svg/user_light.scg'
-            width={20}
-            height={20}
-            alt='dark Mode'
+            src='/assets/svg/user_light.svg'
+            width={40}
+            height={40}
+            alt='user'
           />
         </button>
       </div>
