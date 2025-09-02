@@ -1,3 +1,4 @@
+import Overlay from '@/components/_atoms/invoices/Overlay';
 import Invoices from '@/components/_organisms/invoices/Invoices';
 import InvoicesHeader from '@/components/_organisms/invoices/InvoicesHeader';
 import { div } from 'motion/react-client';
@@ -9,6 +10,8 @@ export default function Home() {
       <InvoicesHeader />
 
       <Invoices />
+
+      <Overlay />
     </div>
   );
 }
