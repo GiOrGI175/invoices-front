@@ -15,7 +15,7 @@ export default function CreateItemList() {
   ]);
 
   return (
-    <div>
+    <div className='mt-[35px]'>
       <span className='font-league font-bold text-[18px] leading-[32px] tracking-[-0.1px] text-[#777F98]'>
         Item List
       </span>

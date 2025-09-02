@@ -8,7 +8,7 @@ export default function BillTo() {
       <div className='flex flex-col'>
         <label
           htmlFor='Clients Name'
-          className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+          className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
         >
           Client’s Name
         </label>
@@ -25,7 +25,7 @@ export default function BillTo() {
       <div className='flex flex-col mt-[25px]'>
         <label
           htmlFor='clients cmail'
-          className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+          className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
         >
           Client’s Email
         </label>
@@ -41,7 +41,7 @@ export default function BillTo() {
       <div className='flex flex-col mt-[25px]'>
         <label
           htmlFor='clientsstreetAddress'
-          className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+          className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
         >
           Street Address
         </label>
@@ -56,10 +56,10 @@ export default function BillTo() {
       </div>
 
       <div className='flex mt-[25px] gap-[24px]'>
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor='clientscity'
-            className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
             City
           </label>
@@ -73,10 +73,10 @@ export default function BillTo() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor='clients post code'
-            className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
             Post Code
           </label>
@@ -90,10 +90,10 @@ export default function BillTo() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor='clients country'
-            className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
             Country
           </label>
@@ -108,10 +108,10 @@ export default function BillTo() {
         </div>
       </div>
       <div className='flex gap-[24px] mt-[25px]'>
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor='Invoice Date'
-            className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
             Invoice Date
           </label>
@@ -125,10 +125,10 @@ export default function BillTo() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor='Payment Terms'
-            className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
             Payment Terms
           </label>
@@ -146,7 +146,7 @@ export default function BillTo() {
       <div className='flex flex-col mt-[25px]'>
         <label
           htmlFor='Project Description'
-          className='mt-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+          className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
         >
           Project Description
         </label>
