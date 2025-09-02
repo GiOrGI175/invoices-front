@@ -1,7 +1,7 @@
 'use client';
 
-import AddNewItem from '@/components/_atoms/invoices/AddNewItem';
-import ItemDelete from '@/components/_atoms/invoices/ItemDelete';
+import AddNewItem from '@/components/_atoms/form/AddNewItem';
+import ItemDelete from '@/components/_atoms/form/ItemDelete';
 import { useState } from 'react';
 
 export default function CreateItemList() {

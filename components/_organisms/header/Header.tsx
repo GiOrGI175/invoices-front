@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import InvoiceCreate from '../invoices/InvoiceCreate';
+import InvoiceCreate from '../form/InvoiceCreate';
 
 export default function Header() {
   return (
     <div>
-      <header className='fixed w-[103px] h-[100dvh] flex flex-col justify-between items-center rounded-br-[20px] rounded-tr-[20px] bg-[#373B53] z-40'>
+      <header className='fixed w-[103px] h-[100dvh] flex flex-col justify-between items-center rounded-br-[20px] rounded-tr-[20px] bg-[#373B53] z-50'>
         <div className='relative w-[103px] h-[103px] flex justify-center items-center bg-[#7C5DFA] rounded-br-[20px] rounded-tr-[20px] overflow-hidden '>
           <Image
             src='/assets/svg/Logo.svg'

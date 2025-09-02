@@ -107,8 +107,8 @@ export default function BillTo() {
           />
         </div>
       </div>
-      <div className='flex gap-[24px] mt-[25px]'>
-        <div className='flex flex-col'>
+      <div className='flex gap-[24px] mt-[25px] w-full'>
+        <div className='flex flex-col max-w-[240px] w-full'>
           <label
             htmlFor='Invoice Date'
             className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
@@ -125,7 +125,7 @@ export default function BillTo() {
           />
         </div>
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col max-w-[240px] w-full'>
           <label
             htmlFor='Payment Terms'
             className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'

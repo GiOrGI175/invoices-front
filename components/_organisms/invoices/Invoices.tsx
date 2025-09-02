@@ -1,6 +1,6 @@
 'use client';
 
-import InvoicesEmpty from '@/components/_atoms/invoices/InvoicesEmpty';
+import InvoicesEmpty from '@/components/_molecules/invoices/InvoicesEmpty';
 import Image from 'next/image';
 
 export default function Invoices() {
