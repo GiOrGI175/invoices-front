@@ -4,6 +4,23 @@
   --font-league: 'League Spartan Variable', Arial, sans-serif;
 }
 
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #dfe3fa;
+  border-radius: 20px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button {
+  display: none;
+}
+
 /* @font-face {
   font-family: 'LeagueSpartan';
   src: local('LeagueSpartan Variable'),

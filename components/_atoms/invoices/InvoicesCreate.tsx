@@ -1,10 +1,20 @@
 'use client';
 
+import { useOpen } from '@/store/ui';
 import Image from 'next/image';
 
 export default function InvoicesCreate() {
+  const toggleisOpen = useOpen((state) => state.toggleisOpen);
+  const toggleOverlay = useOpen((state) => state.toggleOverlay);
+
   return (
-    <button className='w-[150px] h-[48px] rounded-[48px] bg-[#7C5DFA] flex justify-between items-center hover:bg-[#9277FF] duration-500 cursor-pointer'>
+    <button
+      onClick={() => {
+        toggleisOpen();
+        toggleOverlay();
+      }}
+      className='w-[150px] h-[48px] rounded-[48px] bg-[#7C5DFA] flex justify-between items-center hover:bg-[#9277FF] duration-500 cursor-pointer'
+    >
       <div className='w-[32px] h-[32px] ml-[8px] rounded-full bg-white flex justify-center items-center'>
         <Image
           src='assets/svg/pluss.svg'
