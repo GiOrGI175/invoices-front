@@ -1,4 +1,8 @@
 'use client';
+
+import Calendar01 from '@/components/_atoms/form/calendar-01';
+import OpenCalendar from '@/components/_atoms/form/OpenCalendar';
+
 export default function BillTo() {
   return (
     <div className='max-w-[504px] mt-[49px] w-full flex flex-col'>
@@ -125,22 +129,7 @@ export default function BillTo() {
           />
         </div>
 
-        <div className='flex flex-col max-w-[240px] w-full'>
-          <label
-            htmlFor='Payment Terms'
-            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
-          >
-            Payment Terms
-          </label>
-          <input
-            type='text'
-            id='Payment Terms'
-            name='Payment Terms'
-            placeholder='Enter Invoice Date'
-            className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
-          />
-        </div>
+        <OpenCalendar />
       </div>
 
       <div className='flex flex-col mt-[25px]'>
