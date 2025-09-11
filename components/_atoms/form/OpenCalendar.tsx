@@ -4,35 +4,46 @@ import Calendar01 from './calendar-01';
 import { useState } from 'react';
 
 export default function OpenCalendar() {
-  const [Open, setOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  // ფუნქცია რაც კალენდარიდან მოვიძებნით
-  const handleDateSelect = (date) => {
+  const formatForInput = (date: Date) =>
+    date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+
+  const handleDateSelect = (date?: Date) => {
+    if (!date) return;
     setSelectedDate(date);
-    setOpen(false); // კალენდარის დახურვა
+    console.log(date);
+    setOpen(false);
   };
 
   return (
     <div className='relative flex flex-col items-center max-w-[240px] w-full'>
       <label
-        htmlFor='Payment Terms'
+        htmlFor='payment-terms'
         className='mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
       >
         Payment Terms
       </label>
+
       <input
         onClick={() => setOpen((pv) => !pv)}
         type='text'
-        id='Payment Terms'
-        name='Payment Terms'
+        id='payment-terms'
+        name='payment-terms'
         placeholder='Enter Invoice Date'
-        value={selectedDate ? selectedDate.toLocaleDateString() : ''}
+        value={selectedDate ? formatForInput(selectedDate) : ''}
         readOnly
-        className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+        className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px]
+                   font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
       />
+
       <AnimatePresence>
-        {Open && (
+        {open && (
           <motion.div
             initial={{
               opacity: 0,
@@ -46,7 +57,7 @@ export default function OpenCalendar() {
             className='absolute'
           >
             <Calendar01
-              selectedDate={selectedDate}
+              selectedDate={selectedDate ?? new Date()}
               onDateSelect={handleDateSelect}
             />
           </motion.div>
