@@ -4,14 +4,14 @@ import { useOpen } from '@/store/ui';
 import Image from 'next/image';
 
 export default function InvoicesCreate() {
-  const toggleisOpen = useOpen((state) => state.toggleisOpen);
-  const toggleOverlay = useOpen((state) => state.toggleOverlay);
+  const setIsOpen = useOpen((state) => state.setIsOpen);
+  const setIsOverlay = useOpen((state) => state.setIsOverlay);
 
   return (
     <button
       onClick={() => {
-        toggleisOpen();
-        toggleOverlay();
+        setIsOpen(true);
+        setIsOverlay(true);
       }}
       className='w-[150px] h-[48px] rounded-[48px] bg-[#7C5DFA] flex justify-between items-center hover:bg-[#9277FF] duration-500 cursor-pointer'
     >
