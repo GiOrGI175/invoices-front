@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { motion } from 'framer-motion';
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -179,34 +180,75 @@ function CalendarDayButton({
   ...props
 }: React.ComponentProps<typeof DayButton>) {
   const defaultClassNames = getDefaultClassNames();
-
   const ref = React.useRef<HTMLButtonElement>(null);
+
+  const weeks = React.useMemo(() => {
+    const monthStart = new Date(day.date.getFullYear(), day.date.getMonth(), 1);
+    // const monthEnd = new Date(
+    //   day.date.getFullYear(),
+    //   day.date.getMonth() + 1,
+    //   0
+    // );
+
+    const dayNumber = day.date.getDate();
+    const firstDayOfWeek = monthStart.getDay();
+    const weekNumber = Math.floor((dayNumber + firstDayOfWeek - 1) / 7);
+    const dayOfWeek = day.date.getDay();
+
+    return { weekNumber, dayOfWeek };
+  }, [day.date]);
+
+  const animationIndex = weeks.weekNumber * 7 + weeks.dayOfWeek;
+
   React.useEffect(() => {
     if (modifiers.focused) ref.current?.focus();
   }, [modifiers.focused]);
 
   return (
-    <Button
-      ref={ref}
-      variant='ghost'
-      size='icon'
-      data-day={day.date.toLocaleDateString()}
-      data-selected-single={
-        modifiers.selected &&
-        !modifiers.range_start &&
-        !modifiers.range_end &&
-        !modifiers.range_middle
-      }
-      data-range-start={modifiers.range_start}
-      data-range-end={modifiers.range_end}
-      data-range-middle={modifiers.range_middle}
-      className={cn(
-        'data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70',
-        defaultClassNames.day,
-        className
-      )}
-      {...props}
-    />
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8, y: -10 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        transition: {
+          delay: animationIndex * 0.02,
+          duration: 0.3,
+          ease: [0.4, 0.0, 0.2, 1],
+        },
+      }}
+      whileHover={{
+        scale: 1.05,
+        transition: { duration: 0.1 },
+      }}
+      whileTap={{
+        scale: 0.95,
+        transition: { duration: 0.1 },
+      }}
+      className='w-full h-full'
+    >
+      <Button
+        ref={ref}
+        variant='ghost'
+        size='icon'
+        data-day={day.date.toLocaleDateString()}
+        data-selected-single={
+          modifiers.selected &&
+          !modifiers.range_start &&
+          !modifiers.range_end &&
+          !modifiers.range_middle
+        }
+        data-range-start={modifiers.range_start}
+        data-range-end={modifiers.range_end}
+        data-range-middle={modifiers.range_middle}
+        className={cn(
+          'data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70',
+          defaultClassNames.day,
+          className
+        )}
+        {...props}
+      />
+    </motion.div>
   );
 }
 

@@ -2,6 +2,7 @@
 
 import Calendar01 from '@/components/_atoms/form/calendar-01';
 import OpenCalendar from '@/components/_atoms/form/OpenCalendar';
+import OpenPaymentTrems from '@/components/_atoms/form/OpenPaymentTrems';
 
 export default function BillTo() {
   return (
@@ -114,7 +115,7 @@ export default function BillTo() {
       <div className='flex gap-[24px] mt-[25px] w-full'>
         <OpenCalendar />
 
-        <div className='flex flex-col max-w-[240px] w-full'>
+        {/* <div className='flex flex-col max-w-[240px] w-full'>
           <label
             htmlFor='Invoice Date'
             className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
@@ -129,7 +130,8 @@ export default function BillTo() {
             className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
             font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
-        </div>
+        </div> */}
+        <OpenPaymentTrems />
       </div>
 
       <div className='flex flex-col mt-[25px]'>

@@ -34,7 +34,7 @@ export default function Calendar01({
       onSelect={handleDateSelect}
       disabled={{ before: startOfToday }}
       fromDate={startOfToday}
-      className='rounded-lg border shadow-sm'
+      className='rounded-lg border shadow-sm max-w-[240px] w-full'
       // required={false}
     />
   );
