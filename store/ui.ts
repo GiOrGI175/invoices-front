@@ -3,16 +3,22 @@ import { create } from 'zustand';
 
 type UIState = {
   isOpen: boolean;
-  toggleisOpen: () => void;
+  setIsOpen: (value: boolean) => void;
 
   isOverlay: boolean;
-  toggleOverlay: () => void;
+  setIsOverlay: (value: boolean) => void;
+
+  isDelete: boolean;
+  setIsDelete: (value: boolean) => void;
 };
 
 export const useOpen = create<UIState>((set) => ({
   isOpen: false,
-  toggleisOpen: () => set((s) => ({ isOpen: !s.isOpen })),
+  setIsOpen: (value) => set({ isOpen: value }),
 
   isOverlay: false,
-  toggleOverlay: () => set((s) => ({ isOverlay: !s.isOverlay })),
+  setIsOverlay: (value) => set({ isOverlay: value }),
+
+  isDelete: false,
+  setIsDelete: (value) => set({ isDelete: value }),
 }));

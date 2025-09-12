@@ -57,8 +57,8 @@ export default function ItemsList() {
           </div>
         </div>
         <div className='w-full flex flex-col gap-[32px]'>
-          {item.items.map((item) => (
-            <div className='flex justify-between'>
+          {item.items.map((item, idx) => (
+            <div key={idx} className='flex justify-between'>
               <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#0C0E16]'>
                 {item.name}
               </span>

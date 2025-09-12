@@ -6,8 +6,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Overlay() {
   const isOverlay = useOpen((state) => state.isOverlay);
-  const toggleOverlay = useOpen((state) => state.toggleOverlay);
-  const toggleisOpen = useOpen((state) => state.toggleisOpen);
+  const setIsOverlay = useOpen((state) => state.setIsOverlay);
+  const setIsOpen = useOpen((state) => state.setIsOpen);
+  const setIsDelete = useOpen((state) => state.setIsDelete);
 
   useEffect(() => {
     if (isOverlay) {
@@ -26,8 +27,9 @@ export default function Overlay() {
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.22, 0.28, 0, 1] }}
           onClick={() => {
-            toggleOverlay();
-            toggleisOpen();
+            setIsOverlay(false);
+            setIsOpen(false);
+            setIsDelete(false);
           }}
           className='fixed top-0 left-0 w-screen h-screen bg-black/50  z-20 block'
         />

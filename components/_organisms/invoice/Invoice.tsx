@@ -40,6 +40,7 @@ export default function Invoice() {
     ],
     total: 556.0,
   };
+
   return (
     <div className='max-w-[730px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between  bg-[#FFFFFF] drop-shadow-xl'>
       <div className='w-full flex justify-between items-start'>
