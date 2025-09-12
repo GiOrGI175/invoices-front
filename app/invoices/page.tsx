@@ -12,7 +12,7 @@ export default function invoices() {
     <div
       className={`flex flex-col justify-center items-center w-full h-full ${
         isDarkMode ? 'bg-[#141625]' : 'bg-[#F8F8FB]'
-      }`}
+      } transition-colors duration-1000 `}
     >
       <InvoicesHeader />
 
