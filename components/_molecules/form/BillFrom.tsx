@@ -18,7 +18,7 @@ export default function BillFrom() {
           name='streetAddress'
           placeholder='Enter street address'
           className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
         />
       </div>
       <div className='flex mt-[25px] gap-[24px] h-fit'>
@@ -35,7 +35,7 @@ export default function BillFrom() {
             name='city'
             placeholder='Enter city'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
 
@@ -52,7 +52,7 @@ export default function BillFrom() {
             name='post code'
             placeholder='Enter Post Code'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
 
@@ -69,7 +69,7 @@ export default function BillFrom() {
             name='country'
             placeholder='Enter country'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
       </div>

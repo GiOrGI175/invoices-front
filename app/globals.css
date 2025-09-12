@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -22,6 +22,15 @@
 
 .scrollbar-custom::-webkit-scrollbar-button {
   display: none;
+}
+
+@layer base {
+  /* Chrome, Safari, Edge */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 /* @font-face {

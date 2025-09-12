@@ -22,7 +22,7 @@ export default function BillTo() {
           name='Clients Name'
           placeholder='Enter Client’s Name'
           className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
         />
       </div>
 
@@ -39,7 +39,7 @@ export default function BillTo() {
           name='clients cmail'
           placeholder='Enter Client’s Email'
           className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
         />
       </div>
       <div className='flex flex-col mt-[25px]'>
@@ -55,7 +55,7 @@ export default function BillTo() {
           name='clientsstreetAddress'
           placeholder='Enter street address'
           className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
         />
       </div>
 
@@ -73,7 +73,7 @@ export default function BillTo() {
             name='clientscity'
             placeholder='Enter city'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
 
@@ -90,7 +90,7 @@ export default function BillTo() {
             name='clients post code'
             placeholder='Enter Post Code'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
 
@@ -107,17 +107,19 @@ export default function BillTo() {
             name='clients country'
             placeholder='Enter country'
             className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
       </div>
       <div className='flex gap-[24px] mt-[25px] w-full'>
+        <OpenCalendar />
+
         <div className='flex flex-col max-w-[240px] w-full'>
           <label
             htmlFor='Invoice Date'
             className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
           >
-            Invoice Date
+            Payment Terms
           </label>
           <input
             type='text'
@@ -125,11 +127,9 @@ export default function BillTo() {
             name='Invoice Date'
             placeholder='Enter Invoice Date'
             className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
           />
         </div>
-
-        <OpenCalendar />
       </div>
 
       <div className='flex flex-col mt-[25px]'>
@@ -145,7 +145,7 @@ export default function BillTo() {
           name='Project Description'
           placeholder='Enter street address'
           className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
         />
       </div>
     </div>

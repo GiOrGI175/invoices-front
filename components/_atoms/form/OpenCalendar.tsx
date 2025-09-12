@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Calendar01 from './calendar-01';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function OpenCalendar() {
   const [open, setOpen] = useState(false);
@@ -25,9 +26,9 @@ export default function OpenCalendar() {
     <div className='relative flex flex-col items-center max-w-[240px] w-full'>
       <label
         htmlFor='payment-terms'
-        className='mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+        className='mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3] flex self-start'
       >
-        Payment Terms
+        Invoice Date
       </label>
 
       <input
@@ -35,11 +36,19 @@ export default function OpenCalendar() {
         type='text'
         id='payment-terms'
         name='payment-terms'
-        placeholder='Enter Invoice Date'
+        placeholder={formatForInput(new Date())}
         value={selectedDate ? formatForInput(selectedDate) : ''}
         readOnly
         className='max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px]
-                   font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'
+                   font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
+      />
+
+      <Image
+        src='assets/svg/calendar.svg'
+        width={16}
+        height={16}
+        alt='calendar icon'
+        className='absolute right-[16px] top-[57%]'
       />
 
       <AnimatePresence>
