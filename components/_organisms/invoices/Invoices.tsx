@@ -1,12 +1,15 @@
 'use client';
 
 import InvoicesEmpty from '@/components/_molecules/invoices/InvoicesEmpty';
+import { useDarkMode } from '@/store/darkMode';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import StatusIcon from '@/components/_atoms/invoices/StatusIcon';
 
 export default function Invoices() {
   type InvoiceStatus = 'Paid' | 'Pending' | 'Draft';
-
   interface Invoice {
     id: string;
     dueDate: string;
@@ -15,7 +18,7 @@ export default function Invoices() {
     status: InvoiceStatus;
   }
 
-  const invoicesArr: Invoice[] = [
+  const seed: Invoice[] = [
     {
       id: 'RT3080',
       dueDate: 'Due  19 Aug 2021',
@@ -67,67 +70,86 @@ export default function Invoices() {
     },
   ];
 
-  const statusColors: Record<string, string> = {
-    Paid: 'bg-[#33D69F]',
-    Pending: 'bg-[#FF8F00]',
-    Draft: 'bg-[#373B53]',
-  };
+  const isDarkMode = useDarkMode((s) => s.isDarkMode);
+  const router = useRouter();
 
-  const statusBgColors: Record<string, string> = {
-    Paid: 'bg-[#33D69F]/20',
-    Pending: 'bg-[#FF8F00]/20',
-    Draft: 'bg-[#373B53]/20',
+  const [invoices, setInvoices] = useState<Invoice[]>(seed);
+  const [removingId, setRemovingId] = useState<string | null>(null);
+
+  const handleInvoiceClick = (e: React.MouseEvent, invoiceId: string) => {
+    e.preventDefault();
+    setRemovingId(invoiceId);
+    setInvoices((prev) => prev.filter((i) => i.id !== invoiceId));
   };
 
   return (
     <div className='relative z-10 max-w-[730px] w-full mt-[64px]'>
-      {false ? (
+      {invoices.length === 0 ? (
         <InvoicesEmpty />
       ) : (
-        invoicesArr.map((item) => (
-          <Link key={item.id} href={`invoices/${item.id}`}>
-            <div
-              className={`w-full h-[72px] mb-[16px] pt-[30px] pb-[27px] pr-[24px] pl-[32px] rounded-[8px] flex items-center justify-between bg-white  ${
-                item.status === 'Draft' ? '' : 'drop-shadow-xl'
-              } border-[1px] border-transparent hover:border-[#7C5DFA] duration-500 cursor-pointer`}
+        <AnimatePresence
+          onExitComplete={async () => {
+            if (removingId) {
+              await new Promise((r) => setTimeout(r, 80));
+              router.push(`invoices/${removingId}`);
+              setRemovingId(null);
+            }
+          }}
+        >
+          {invoices.map((item) => (
+            <motion.div
+              key={item.id}
+              layout
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: 24, height: 0, marginBottom: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ overflow: 'hidden' }}
+              onClick={(e) => handleInvoiceClick(e, item.id)}
+              className={`w-full h-[72px] mb-[16px] pt-[30px] pb-[27px] pr-[24px] pl-[32px] rounded-[8px] flex items-center justify-between
+                ${isDarkMode ? 'bg-[#1E2139]' : 'bg-white'}
+                ${item.status === 'Draft' ? '' : 'drop-shadow-xl'}
+                border-[1px] border-transparent hover:border-[#7C5DFA] transition-colors duration-500 cursor-pointer`}
             >
               <div className='flex items-center gap-[51px]'>
                 <div className='flex items-center gap-[28px]'>
-                  <span className='font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'>
+                  <span
+                    className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+                      isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+                    } transition-colors duration-1000`}
+                  >
                     <span className='font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] text-[#888EB0]'>
                       #
                     </span>
                     {item.id}
                   </span>
-
-                  <span className='font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] text-[#888EB0]'>
+                  <span
+                    className={`font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
+                      isDarkMode ? 'text-[#DFE3FA]' : 'text-[#888EB0]'
+                    } transition-colors duration-1000`}
+                  >
                     {item.dueDate}
                   </span>
                 </div>
-                <span className='font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] text-[#888EB0]'>
+                <span
+                  className={`font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
+                    isDarkMode ? 'text-[#DFE3FA]' : 'text-[#888EB0]'
+                  } transition-colors duration-1000`}
+                >
                   {item.clientName}
                 </span>
               </div>
 
               <div className='flex items-center gap-[40px]'>
-                <span className='font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'>
-                  ${item.amount}
+                <span
+                  className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+                    isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+                  } transition-colors duration-1000`}
+                >
+                  $ {item.amount}
                 </span>
-
                 <div className='flex items-center gap-[20px]'>
-                  <div
-                    className={`w-[104px] h-[40px] rounded-[6px] flex items-center justify-center ${
-                      statusBgColors[item.status]
-                    } `}
-                  >
-                    <div
-                      className={`w-[8px] h-[8px] mr-[8px] rounded-full 
-                  ${statusColors[item.status]} `}
-                    />
-                    <span className='font-league   text-center font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'>
-                      {item.status}
-                    </span>
-                  </div>
+                  <StatusIcon item={item} />
                   <Image
                     src='assets/svg/arrow_right.svg'
                     width={8}
@@ -136,9 +158,9 @@ export default function Invoices() {
                   />
                 </div>
               </div>
-            </div>
-          </Link>
-        ))
+            </motion.div>
+          ))}
+        </AnimatePresence>
       )}
     </div>
   );

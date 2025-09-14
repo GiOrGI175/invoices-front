@@ -3,6 +3,7 @@
 import InvoiceDelete from '@/components/_atoms/invoice/InvoiceDelete';
 import InvoiceEdit from '@/components/_atoms/invoice/InvoiceEdit';
 import InvoiceMarkPaid from '@/components/_atoms/invoice/InvoiceMarkPaid';
+import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
 
 export default function InvoiceHeader() {
@@ -20,19 +21,40 @@ export default function InvoiceHeader() {
     Draft: 'bg-[#373B53]',
   };
 
+  const statusDarkColors: Record<string, string> = {
+    Paid: 'bg-[#33D69F]',
+    Pending: 'bg-[#FF8F00]',
+    Draft: 'bg-[#DFE3FA]',
+  };
+
   const statusBgColors: Record<string, string> = {
     Paid: 'bg-[#33D69F]/20',
     Pending: 'bg-[#FF8F00]/20',
     Draft: 'bg-[#373B53]/20',
   };
 
+  const statusTextColors: Record<string, string> = {
+    Paid: 'text-[#33D69F]',
+    Pending: 'text-[#FF8F00]',
+    Draft: 'text-[#DFE3FA]',
+  };
+
   const setIsOverlay = useOpen((state) => state.setIsOverlay);
   const setIsDelete = useOpen((state) => state.setIsDelete);
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div className='max-w-[730px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center bg-[#FFFFFF] drop-shadow-xl'>
+    <div
+      className={`max-w-[730px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center drop-shadow-xl ${
+        isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
+      } transition-colors duration-1000`}
+    >
       <div className='flex items-center'>
-        <span className='mr-[20px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#858BB2]'>
+        <span
+          className={`mr-[20px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]    ${
+            isDarkMode ? 'text-[#DFE3FA]' : 'text-[#858BB2]'
+          } transition-colors duration-1000`}
+        >
           Status
         </span>
         <div
@@ -42,9 +64,17 @@ export default function InvoiceHeader() {
         >
           <div
             className={`w-[8px] h-[8px] mr-[8px] rounded-full 
-                  ${statusColors[item.status]} `}
+                  ${
+                    isDarkMode
+                      ? ` ${statusDarkColors[item.status]}`
+                      : `${statusColors[item.status]}`
+                  } transition-colors duration-1000`}
           />
-          <span className='font-league   text-center font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]'>
+          <span
+            className={`font-league   text-center font-bold text-[15px] leading-[15px] tracking-[-0.25px]  ${
+              isDarkMode ? `${statusTextColors[item.status]}` : 'text-[#0C0E16]'
+            } transition-colors duration-1000`}
+          >
             {item.status}
           </span>
         </div>

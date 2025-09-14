@@ -1,6 +1,7 @@
 'use client';
 
 import ItemsList from '@/components/_molecules/invoice/ItemsList';
+import { useDarkMode } from '@/store/darkMode';
 
 export default function Invoice() {
   const item = {
@@ -41,29 +42,59 @@ export default function Invoice() {
     total: 556.0,
   };
 
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
+
   return (
-    <div className='max-w-[730px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between  bg-[#FFFFFF] drop-shadow-xl'>
+    <div
+      className={`max-w-[730px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between drop-shadow-xl  ${
+        isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
+      } transition-colors duration-1000`}
+    >
       <div className='w-full flex justify-between items-start'>
         <div className='flex flex-col'>
-          <span className='font-league font-bold text-[15px] leading-[24px] tracking-[-0.1px] text-[#0C0E16] '>
+          <span
+            className={`font-league font-bold text-[15px] leading-[24px] tracking-[-0.1px] ${
+              isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16] '
+            } transition-colors duration-1000 `}
+          >
             <span className='text-[#888EB0]'>#</span>
             {item.id}
           </span>
-          <p className='mt-[7px] font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'>
+          <p
+            className={`mt-[7px] font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000  `}
+          >
             {item.description}
           </p>
         </div>
         <div className='flex flex-col'>
-          <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             {item.senderAddress.street}
           </span>
-          <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             {item.senderAddress.city}
           </span>
-          <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             {item.senderAddress.postCode}
           </span>
-          <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             {item.senderAddress.country}
           </span>
         </div>
@@ -71,49 +102,97 @@ export default function Invoice() {
       <div className='flex mt-[21px] gap-[118px]'>
         <div className='flex flex-col gap-[31px]'>
           <div className='flex flex-col'>
-            <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]   ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               Invoice Date
             </span>
-            <span className='mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px] text-[#0C0E16]'>
+            <span
+              className={`mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px]  ${
+                isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+              } transition-colors duration-1000 `}
+            >
               {item.createdAt}
             </span>
           </div>
           <div className='flex flex-col'>
-            <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]   ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               Payment Due
             </span>
-            <span className='mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px] text-[#0C0E16]'>
+            <span
+              className={`mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px]  ${
+                isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+              } transition-colors duration-1000 `}
+            >
               {item.paymentDue}
             </span>
           </div>
         </div>
         <div className='flex flex-col'>
-          <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]   ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             Bill To
           </span>
-          <span className='mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px] text-[#0C0E16]'>
+          <span
+            className={`mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px]  ${
+              isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+            } transition-colors duration-1000 `}
+          >
             {item.clientName}
           </span>
           <div className='flex flex-col mt-[7px]'>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               {item.clientAddress.street}
             </span>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               {item.clientAddress.city}
             </span>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               {item.clientAddress.postCode}
             </span>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               {item.clientAddress.country}
             </span>
           </div>
         </div>
         <div className='flex flex-col'>
-          <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]   ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             Sent to
           </span>
-          <span className='mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px] text-[#0C0E16]'>
+          <span
+            className={`mt-[13px] font-league font-medium text-[15px] leading-[20px] tracking-[-0.25px]  ${
+              isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+            } transition-colors duration-1000 `}
+          >
             {item.clientEmail}
           </span>
         </div>

@@ -3,10 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Calendar01 from './calendar-01';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useDarkMode } from '@/store/darkMode';
 
 export default function OpenCalendar() {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   const formatForInput = (date: Date) =>
     date.toLocaleDateString('en-GB', {
@@ -26,7 +29,9 @@ export default function OpenCalendar() {
     <div className='relative flex flex-col items-center max-w-[240px] w-full'>
       <label
         htmlFor='payment-terms'
-        className='mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3] flex self-start'
+        className={`mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] flex self-start ${
+          isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+        } transition-colors duration-1000`}
       >
         Invoice Date
       </label>
@@ -40,9 +45,13 @@ export default function OpenCalendar() {
           placeholder={formatForInput(new Date())}
           value={selectedDate ? formatForInput(selectedDate) : ''}
           readOnly
-          className='max-w-[240px] w-full h-[48px] p-[20px] pr-[48px] border border-[#DFE3FA] rounded-[4px]
-                     font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] 
-                     focus:outline-none focus:border-[#7C5DFA] cursor-pointer transition-all duration-200'
+          className={`max-w-[240px] w-full h-[48px] p-[20px] pr-[48px] border border-[#DFE3FA] rounded-[4px]
+                     font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] 
+                     focus:outline-none focus:border-[#7C5DFA] cursor-pointer transition-all duration-200 ${
+                       isDarkMode
+                         ? 'bg-[#1E2139] text-[#FFFFFF]'
+                         : 'bg-transparent text-[#0C0E16]'
+                     } transition-colors duration-1000`}
         />
 
         <Image

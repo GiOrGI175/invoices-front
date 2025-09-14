@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import { Calendar } from '@/components/_ui/calendar';
+import { useDarkMode } from '@/store/darkMode';
 
 type Calendar01Props = {
   selectedDate: Date;
@@ -12,6 +13,8 @@ export default function Calendar01({
   onDateSelect,
 }: Calendar01Props) {
   const [date, setDate] = React.useState<Date | undefined>(selectedDate);
+
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   const handleDateSelect = (date?: Date) => {
     if (!date) return;
@@ -34,7 +37,9 @@ export default function Calendar01({
       onSelect={handleDateSelect}
       disabled={{ before: startOfToday }}
       fromDate={startOfToday}
-      className='rounded-lg border shadow-sm max-w-[240px] w-full'
+      className={`rounded-lg border shadow-sm max-w-[240px] w-full ${
+        isDarkMode ? 'bg-[#1E2139] text-[#FFFFFF]' : 'bg-white text-[#0C0E16]'
+      } transition-colors duration-1000`}
       // required={false}
     />
   );
