@@ -2,11 +2,13 @@
 
 import Baner from '@/components/_molecules/form/Baner';
 import CreateForm from '@/components/_organisms/form/CreateForm';
+import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function InvoiceCreate() {
   const isOpen = useOpen((state) => state.isOpen);
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
     <AnimatePresence>
@@ -16,10 +18,16 @@ export default function InvoiceCreate() {
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: -8, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.22, 0.28, 0, 1] }}
-          className='fixed max-w-[719px] w-full h-[100dvh] rounded-[20px] pb-[170px] bg-[#FFFFFF] z-30 '
+          className={`fixed max-w-[719px] w-full h-[100dvh] rounded-[20px] pb-[170px] ${
+            isDarkMode ? 'bg-[#141625]' : 'bg-white'
+          } transition-colors duration-1000 z-30 `}
         >
           <div className=' max-w-[520px] w-full h-full ml-[159px] mt-[59px] mb-[70px]  overflow-y-scroll scrollbar-custom'>
-            <h2 className='font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px] text-[#0C0E16]'>
+            <h2
+              className={`mb-[46px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
+                isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+              } transition-colors duration-1000`}
+            >
               New Invoice
             </h2>
             <CreateForm />

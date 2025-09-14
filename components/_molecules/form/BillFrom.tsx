@@ -1,5 +1,10 @@
 'use client';
+
+import { useDarkMode } from '@/store/darkMode';
+
 export default function BillFrom() {
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
+
   return (
     <div className='max-w-[504px] w-full flex flex-col'>
       <span className='mb-[24px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#7C5DFA]'>
@@ -8,7 +13,9 @@ export default function BillFrom() {
       <div className='flex flex-col'>
         <label
           htmlFor='streetAddress'
-          className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+          className={`mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]  ${
+            isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+          } transition-colors duration-1000`}
         >
           Street Address
         </label>
@@ -17,15 +24,21 @@ export default function BillFrom() {
           id='streetAddress'
           name='streetAddress'
           placeholder='Enter street address'
-          className='w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
+          className={`w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] focus:outline-none focus:border-[#7C5DFA] ${
+              isDarkMode
+                ? 'bg-[#1E2139] text-[#FFFFFF]'
+                : 'bg-transparent text-[#0C0E16]'
+            } transition-colors duration-1000`}
         />
       </div>
       <div className='flex mt-[25px] gap-[24px] h-fit'>
         <div className='flex flex-col'>
           <label
             htmlFor='city'
-            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className={`mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000`}
           >
             City
           </label>
@@ -34,15 +47,21 @@ export default function BillFrom() {
             id='city'
             name='city'
             placeholder='Enter city'
-            className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
+            className={`max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px]  focus:outline-none focus:border-[#7C5DFA] ${
+              isDarkMode
+                ? 'bg-[#1E2139] text-[#FFFFFF]'
+                : 'bg-transparent text-[#0C0E16]'
+            } transition-colors duration-1000`}
           />
         </div>
 
         <div className='flex flex-col'>
           <label
             htmlFor='post code'
-            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className={`mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000`}
           >
             Post Code
           </label>
@@ -51,15 +70,21 @@ export default function BillFrom() {
             id='post code'
             name='post code'
             placeholder='Enter Post Code'
-            className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
+            className={`max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px]  focus:outline-none focus:border-[#7C5DFA] ${
+              isDarkMode
+                ? 'bg-[#1E2139] text-[#FFFFFF]'
+                : 'bg-transparent text-[#0C0E16]'
+            } transition-colors duration-1000`}
           />
         </div>
 
         <div className='flex flex-col'>
           <label
             htmlFor='country'
-            className='mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#7E88C3]'
+            className={`mb-[9px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000`}
           >
             Country
           </label>
@@ -68,8 +93,12 @@ export default function BillFrom() {
             id='country'
             name='country'
             placeholder='Enter country'
-            className='max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16] focus:outline-none focus:border-[#7C5DFA]'
+            className={`max-w-[152px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
+            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px]  focus:outline-none focus:border-[#7C5DFA] ${
+              isDarkMode
+                ? 'bg-[#1E2139] text-[#FFFFFF]'
+                : 'bg-transparent text-[#0C0E16]'
+            } transition-colors duration-1000`}
           />
         </div>
       </div>

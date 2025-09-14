@@ -10,7 +10,7 @@ export default function invoices() {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center w-full h-full ${
+      className={`w-full min-h-[100dvh] h-full flex flex-col justify-center items-center  ${
         isDarkMode ? 'bg-[#141625]' : 'bg-[#F8F8FB]'
       } transition-colors duration-1000 `}
     >
