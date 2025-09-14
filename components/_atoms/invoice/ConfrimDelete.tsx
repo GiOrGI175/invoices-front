@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import InvoiceDelete from './InvoiceDelete';
 import { useOpen } from '@/store/ui';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useDarkMode } from '@/store/darkMode';
 
 export default function ConfrimDelete() {
   const params = useParams();
@@ -12,6 +13,7 @@ export default function ConfrimDelete() {
   const setIsOverlay = useOpen((state) => state.setIsOverlay);
   const setIsDelete = useOpen((state) => state.setIsDelete);
   const isDelete = useOpen((state) => state.isDelete);
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
     <AnimatePresence>
@@ -21,24 +23,40 @@ export default function ConfrimDelete() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.22, 0.28, 0, 1] }}
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  items-center justify-center max-w-[480px] w-full p-[50px] bg-white shadow-2xl z-30'
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  items-center justify-center max-w-[480px] w-full rounded-[8px] p-[50px]  shadow-2xl z-30  ${
+            isDarkMode ? 'bg-[#1E2139]' : 'bg-white'
+          } transition-colors duration-1000 `}
         >
-          <span className='mb-[12px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px] text-[#0C0E16]'>
+          <span
+            className={`pb-[12px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
+              isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+            } transition-colors duration-1000 `}
+          >
             Confirm Deletion
           </span>
-          <p className='mb-[14px] font-league font-medium text-[13px] leading-[22px] tracking-[-0.1px] text-[#888EB0]'>
+          <p
+            className={`mb-[14px] font-league font-medium text-[13px] leading-[22px] tracking-[-0.1px]  ${
+              isDarkMode ? 'text-[#DFE3FA]' : ' text-[#888EB0] '
+            } transition-colors duration-1000 `}
+          >
             Are you sure you want to delete invoice {invoicesId}? This action
             cannot be undone.
           </p>
-          <div className='flex gap-[8px]'>
+          <div className='flex justify-end gap-[8px]'>
             <button
               onClick={() => {
                 setIsOverlay(false);
                 setIsDelete(false);
               }}
-              className='w-[91px] h-[48px] rounded-[24px] bg-[#F9FAFE] cursor-pointer'
+              className={`w-[91px] h-[48px] rounded-[24px]  cursor-pointer ${
+                isDarkMode ? 'bg-[#252945]' : 'bg-[#F9FAFE]'
+              } transition-colors duration-1000`}
             >
-              <span className='mb-[14px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#7E88C3]'>
+              <span
+                className={`mb-[14px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+                  isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                } transition-colors duration-1000`}
+              >
                 Cancel
               </span>
             </button>

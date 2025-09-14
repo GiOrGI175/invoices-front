@@ -1,4 +1,7 @@
 'use client';
+
+import { useDarkMode } from '@/store/darkMode';
+
 export default function ItemsList() {
   const item = {
     id: 'XM9141',
@@ -37,21 +40,44 @@ export default function ItemsList() {
     ],
     total: 556.0,
   };
+
+  const isDarkMode = useDarkMode((state) => state.isDarkMode);
+
   return (
-    <div className='w-full mt-[44px]  rounded-[8px] overflow-hidden'>
+    <div
+      className={`w-full mt-[44px]  rounded-[8px] overflow-hidden  ${
+        isDarkMode ? 'bg-[#252945]' : 'bg-transparent'
+      } transition-colors duration-1000 `}
+    >
       <div className='p-[32px]'>
         <div className='w-full flex gap-[227px] mb-[32px]'>
-          <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+          <span
+            className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+            } transition-colors duration-1000 `}
+          >
             Item Name
           </span>
           <div className='max-w-[282px] w-full flex justify-between items-center'>
-            <span className=' font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               QTY.
             </span>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               Price
             </span>
-            <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+            <span
+              className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
+              } transition-colors duration-1000 `}
+            >
               Total
             </span>
           </div>
@@ -59,17 +85,33 @@ export default function ItemsList() {
         <div className='w-full flex flex-col gap-[32px]'>
           {item.items.map((item, idx) => (
             <div key={idx} className='flex justify-between'>
-              <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#0C0E16]'>
+              <span
+                className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                  isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+                } transition-colors duration-1000 `}
+              >
                 {item.name}
               </span>
               <div className='max-w-[282px] w-full flex justify-between items-center'>
-                <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+                <span
+                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                    isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                  } transition-colors duration-1000 `}
+                >
                   {item.quantity}
                 </span>
-                <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+                <span
+                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                    isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                  } transition-colors duration-1000  `}
+                >
                   {item.price}
                 </span>
-                <span className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-[#7E88C3]'>
+                <span
+                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                    isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                  } transition-colors duration-1000 `}
+                >
                   {item.total}
                 </span>
               </div>
@@ -77,7 +119,11 @@ export default function ItemsList() {
           ))}
         </div>
       </div>
-      <div className='w-full h-[80px] flex justify-between items-center p-[32px] bg-[#373B53]'>
+      <div
+        className={`w-full h-[80px] flex justify-between items-center p-[32px]   ${
+          isDarkMode ? 'bg-[#0C0E16]' : 'bg-[#373B53]'
+        } transition-colors duration-1000 `}
+      >
         <p className='font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] text-white'>
           Amount Due
         </p>
