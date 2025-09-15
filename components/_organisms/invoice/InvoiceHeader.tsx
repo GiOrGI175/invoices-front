@@ -5,6 +5,7 @@ import InvoiceEdit from '@/components/_atoms/invoice/InvoiceEdit';
 import InvoiceMarkPaid from '@/components/_atoms/invoice/InvoiceMarkPaid';
 import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
+import { motion } from 'framer-motion';
 
 export default function InvoiceHeader() {
   const item = {
@@ -44,7 +45,14 @@ export default function InvoiceHeader() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div
+    <motion.div
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        duration: 1.2,
+        stiffness: 120,
+      }}
       className={`max-w-[730px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center drop-shadow-xl ${
         isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
       } transition-colors duration-1000`}
@@ -92,6 +100,6 @@ export default function InvoiceHeader() {
         </div>
         <InvoiceMarkPaid />
       </div>
-    </div>
+    </motion.div>
   );
 }

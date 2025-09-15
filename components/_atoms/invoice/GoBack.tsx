@@ -4,6 +4,7 @@ import { useDarkMode } from '@/store/darkMode';
 import { div } from 'motion/react-m';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function GoBack() {
   const router = useRouter();
@@ -15,7 +16,16 @@ export default function GoBack() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div className='max-w-[730px] w-full mb-[31px] flex justify-start'>
+    <motion.div
+      initial={{ x: -50, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        duration: 1.2,
+        stiffness: 120,
+      }}
+      className='max-w-[730px] w-full mb-[31px] flex justify-start'
+    >
       <button onClick={handleGoBack} className='flex cursor-pointer'>
         <Image
           src='/assets/svg/arrow_left.svg'
@@ -31,6 +41,6 @@ export default function GoBack() {
           Go back
         </span>
       </button>
-    </div>
+    </motion.div>
   );
 }
