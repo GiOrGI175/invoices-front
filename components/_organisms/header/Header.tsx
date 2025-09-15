@@ -20,11 +20,11 @@ export default function Header() {
           duration: 1.2,
           stiffness: 120,
         }}
-        className={`fixed w-[103px] h-[100dvh] flex flex-col justify-between items-center rounded-br-[20px] rounded-tr-[20px] ${
+        className={`lg:fixed w-[103px] h-[100dvh] max-lg:w-[100dvw] max-lg:h-[80px] flex flex-col max-lg:flex-row justify-between items-center lg:rounded-br-[20px] lg:rounded-tr-[20px] ${
           isDarkMode ? 'bg-[#1E2139]' : 'bg-[#373B53]'
         }  transition-colors duration-1000  z-50`}
       >
-        <div className='relative w-[103px] h-[103px] flex justify-center items-center bg-[#7C5DFA] rounded-br-[20px] rounded-tr-[20px] overflow-hidden '>
+        <div className='hidden relative w-[103px] h-[103px] lg:flex justify-center items-center bg-[#7C5DFA] rounded-br-[20px] rounded-tr-[20px] overflow-hidden '>
           <Image
             src='/assets/svg/Logo.svg'
             width={40}
@@ -35,7 +35,18 @@ export default function Header() {
           <div className='absolute w-[103px] h-[103px] top-[50%] rounded-tl-[20px] bg-[#9277FF] z-10' />
         </div>
 
-        <div className='flex flex-col justify-between items-center'>
+        <div className='relative w-[80px] h-[80px] max-lg:flex lg:hidden justify-center items-center bg-[#7C5DFA] rounded-br-[20px] rounded-tr-[20px] overflow-hidden '>
+          <Image
+            src='/assets/svg/Logo.svg'
+            width={30}
+            height={30}
+            alt='Logo'
+            className='relative z-20'
+          />
+          <div className='absolute w-[80px] h-[80px] top-[50%] rounded-tl-[20px] bg-[#9277FF] z-10' />
+        </div>
+
+        <div className='flex lg:flex-col max-lg:flex-row justify-between items-center'>
           <DarkMode />
           <UserBtn />
         </div>
