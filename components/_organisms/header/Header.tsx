@@ -5,13 +5,21 @@ import InvoiceCreate from '../form/InvoiceCreate';
 import DarkMode from '@/components/_atoms/header/DarkMode';
 import UserBtn from '@/components/_atoms/header/UserBtn';
 import { useDarkMode } from '@/store/darkMode';
+import { motion } from 'framer-motion';
 
 export default function Header() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
     <div>
-      <header
+      <motion.header
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{
+          type: 'spring',
+          duration: 1.2,
+          stiffness: 120,
+        }}
         className={`fixed w-[103px] h-[100dvh] flex flex-col justify-between items-center rounded-br-[20px] rounded-tr-[20px] ${
           isDarkMode ? 'bg-[#1E2139]' : 'bg-[#373B53]'
         }  transition-colors duration-1000  z-50`}
@@ -31,7 +39,7 @@ export default function Header() {
           <DarkMode />
           <UserBtn />
         </div>
-      </header>
+      </motion.header>
       <InvoiceCreate />
     </div>
   );

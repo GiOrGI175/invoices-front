@@ -2,6 +2,7 @@
 
 import ItemsList from '@/components/_molecules/invoice/ItemsList';
 import { useDarkMode } from '@/store/darkMode';
+import { motion } from 'framer-motion';
 
 export default function Invoice() {
   const item = {
@@ -45,7 +46,14 @@ export default function Invoice() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div
+    <motion.div
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        duration: 1.2,
+        stiffness: 120,
+      }}
       className={`max-w-[730px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between drop-shadow-xl  ${
         isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
       } transition-colors duration-1000`}
@@ -198,6 +206,6 @@ export default function Invoice() {
         </div>
       </div>
       <ItemsList />
-    </div>
+    </motion.div>
   );
 }
