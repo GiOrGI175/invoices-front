@@ -107,8 +107,8 @@ export default function Invoice() {
           </span>
         </div>
       </div>
-      <div className='flex max-sm:flex-col  mt-[21px] max-sm:gap-[35px] lg:gap-[118px]'>
-        <div className='flex max-sm:gap-[61px] gap-[118px]'>
+      <div className='flex max-sm:flex-col  mt-[21px] max-sm:gap-[35px] sm:gap-[118px]'>
+        <div className='flex max-sm:justify-between sm:gap-[118px]'>
           <div className='flex flex-col gap-[31px]'>
             <div className='flex flex-col'>
               <span
@@ -143,7 +143,7 @@ export default function Invoice() {
               </span>
             </div>
           </div>
-          <div className='flex flex-col'>
+          <div className='flex flex-col mr-[50px]'>
             <span
               className={`font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]   ${
                 isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'

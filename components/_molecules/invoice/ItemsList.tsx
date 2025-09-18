@@ -50,7 +50,7 @@ export default function ItemsList() {
       } transition-colors duration-1000 `}
     >
       <div className='p-[32px]'>
-        <div className='w-full flex justify-between mb-[32px]'>
+        <div className='max-sm:hidden w-full flex justify-between mb-[32px]'>
           <span
             className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
               isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
@@ -58,7 +58,7 @@ export default function ItemsList() {
           >
             Item Name
           </span>
-          <div className='max-w-[282px] w-full flex justify-between items-center'>
+          <div className='sm:max-w-[282px] sm:w-full w-fit flex justify-between items-center'>
             <span
               className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
                 isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
@@ -85,34 +85,45 @@ export default function ItemsList() {
         <div className='w-full flex flex-col gap-[32px]'>
           {item.items.map((item, idx) => (
             <div key={idx} className='flex justify-between'>
-              <span
-                className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
-                  isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
-                } transition-colors duration-1000 `}
-              >
-                {item.name}
-              </span>
-              <div className='max-w-[282px] w-full flex justify-between items-center'>
+              <div>
                 <span
-                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
+                  className={`font-league font-bold text-[15px] sm:text-[13px] leading-[18px] tracking-[-0.1px] ${
+                    isDarkMode ? 'text-[#FFFFFF]' : 'text-[#0C0E16]'
+                  } transition-colors duration-1000 `}
+                >
+                  {item.name}
+                </span>
+                <span
+                  className={`block sm:hidden-[-0.1px] ${
+                    isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                  } transition-colors duration-1000 `}
+                >
+                  {item.quantity} x ${item.price}
+                </span>
+              </div>
+              <div className=' sm:max-w-[282px] sm:w-full flex justify-between items-center'>
+                <span
+                  className={`hidden sm:block font-league font-bold text-[15px] leading-[18px] tracking-[-0.1px] ${
                     isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
                   } transition-colors duration-1000 `}
                 >
                   {item.quantity}
                 </span>
                 <span
-                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                  className={`hidden sm:block font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
                     isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
                   } transition-colors duration-1000  `}
                 >
-                  {item.price}
+                  $ {item.price}
                 </span>
                 <span
-                  className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
-                    isDarkMode ? 'text-[#DFE3FA] ' : 'text-[#7E88C3] '
+                  className={`font-league font-bold sm:font-medium text-[13px] leading-[18px] tracking-[-0.1px]  ${
+                    isDarkMode
+                      ? 'text-[#DFE3FA] '
+                      : 'text-[#0C0E16] sm:text-[#7E88C3] '
                   } transition-colors duration-1000 `}
                 >
-                  {item.total}
+                  $ {item.total}
                 </span>
               </div>
             </div>
