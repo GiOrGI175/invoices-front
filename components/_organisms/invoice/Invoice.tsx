@@ -54,7 +54,7 @@ export default function Invoice() {
         duration: 1.2,
         stiffness: 120,
       }}
-      className={`max-w-[730px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between drop-shadow-xl  ${
+      className={`lg:max-w-[730px] max-lg:max-w-[688px] w-full rounded-[8px] mt-[24px] p-[48px] flex flex-col justify-between drop-shadow-xl  ${
         isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
       } transition-colors duration-1000`}
     >

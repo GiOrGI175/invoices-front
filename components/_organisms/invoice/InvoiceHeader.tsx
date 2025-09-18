@@ -53,7 +53,7 @@ export default function InvoiceHeader() {
         duration: 1.2,
         stiffness: 120,
       }}
-      className={`max-w-[730px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center drop-shadow-xl ${
+      className={`lg:max-w-[730px] max-lg:max-w-[688px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center drop-shadow-xl ${
         isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
       } transition-colors duration-1000`}
     >

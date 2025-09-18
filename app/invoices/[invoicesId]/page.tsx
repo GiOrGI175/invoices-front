@@ -19,7 +19,7 @@ export default function InvoicesId({
 
   return (
     <div
-      className={`pt-[65px] pb-[54px] flex flex-col justify-center items-center w-full min-h-[100dvh]  ${
+      className={`pt-[65px] pb-[54px] max-lg:px-[40px] flex flex-col justify-center items-center w-full min-h-[100dvh]  ${
         isDarkMode ? 'bg-[#141625]' : ' bg-[#F8F8FB]'
       } transition-colors duration-1000 `}
     >
