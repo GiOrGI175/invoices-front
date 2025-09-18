@@ -20,7 +20,7 @@ export default function Header() {
           duration: 1.2,
           stiffness: 120,
         }}
-        className={`lg:fixed w-[103px] h-[100dvh] max-lg:w-[100dvw] max-lg:h-[80px] flex flex-col max-lg:flex-row justify-between items-center lg:rounded-br-[20px] lg:rounded-tr-[20px] ${
+        className={`lg:fixed max-lg:relative w-[103px] h-[100dvh] max-lg:w-[100dvw] max-lg:h-[80px] flex flex-col max-lg:flex-row justify-between items-center lg:rounded-br-[20px] lg:rounded-tr-[20px] ${
           isDarkMode ? 'bg-[#1E2139]' : 'bg-[#373B53]'
         }  transition-colors duration-1000  z-50`}
       >
