@@ -6,7 +6,7 @@ export default function UserBtn() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <button className=' max-lg:w-[96px] max-lg:flex max-lg:justify-center  lg:my-[24px] cursor-pointer'>
+    <button className=' max-lg:w-[96px] max-sm:w-[72px] max-lg:flex max-lg:justify-center  lg:my-[24px] cursor-pointer'>
       <AnimatePresence mode='wait' initial={false}>
         <motion.div
           key={isDarkMode ? 'sun' : 'moon'}

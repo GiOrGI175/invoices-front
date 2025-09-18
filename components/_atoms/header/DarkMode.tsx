@@ -10,7 +10,7 @@ export default function DarkMode() {
   return (
     <button
       onClick={() => toggleDarkMode()}
-      className='lg:pb-[32px] lg:w-[103px] max-lg:w-[96px] max-lg:h-[80px]  flex justify-center max-lg:items-center lg:border-b-[1px] max-lg:border-r-[1px] border-[#494E6E]  cursor-pointer'
+      className='lg:pb-[32px] lg:w-[103px] max-lg:w-[96px] max-sm:w-[72px]  max-lg:h-[80px]  max-sm:h-[72px] flex justify-center max-lg:items-center lg:border-b-[1px] max-lg:border-r-[1px] border-[#494E6E]  cursor-pointer'
     >
       <AnimatePresence mode='wait' initial={false}>
         <motion.div
