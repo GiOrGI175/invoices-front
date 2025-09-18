@@ -24,7 +24,7 @@ export default function GoBack() {
         duration: 1.2,
         stiffness: 120,
       }}
-      className='max-w-[730px] w-full mb-[31px] flex justify-start'
+      className='lg:max-w-[730px] max-lg:max-w-[688px] w-full mb-[31px] flex justify-start'
     >
       <button onClick={handleGoBack} className='flex cursor-pointer'>
         <Image

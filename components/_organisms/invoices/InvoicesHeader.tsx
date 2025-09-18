@@ -15,7 +15,7 @@ export default function InvoicesHeader() {
         duration: 1.2,
         stiffness: 120,
       }}
-      className='lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[77px] max-lg:mt-[61px] flex justify-between items-center'
+      className='lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[77px] sm:max-lg:mt-[61px] max-sm:mt-[32px] flex justify-between items-center'
     >
       <InvoicesTitle />
 

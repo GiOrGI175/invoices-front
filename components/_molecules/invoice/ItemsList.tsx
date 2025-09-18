@@ -50,7 +50,7 @@ export default function ItemsList() {
       } transition-colors duration-1000 `}
     >
       <div className='p-[32px]'>
-        <div className='w-full flex gap-[227px] mb-[32px]'>
+        <div className='w-full flex justify-between mb-[32px]'>
           <span
             className={`font-league font-medium text-[13px] leading-[18px] tracking-[-0.1px] ${
               isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
