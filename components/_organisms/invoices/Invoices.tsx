@@ -118,7 +118,7 @@ export default function Invoices() {
   };
 
   return (
-    <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full mt-[64px]'>
+    <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[64px] max-lg:mt-[55px]'>
       {invoices.length === 0 ? (
         <InvoicesEmpty />
       ) : (
