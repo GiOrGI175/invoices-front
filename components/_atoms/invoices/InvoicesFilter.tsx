@@ -23,17 +23,25 @@ export default function InvoicesFilter() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div className='relative z-20 w-[192px] flex justify-center'>
+    <div className='relative z-20 w-[71px] sm:w-[192px] flex justify-center'>
       <button
         onClick={() => setShowPopUp((pv) => !pv)}
         className='flex justify-center items-center cursor-pointer'
       >
         <span
-          className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+          className={`hidden sm:block font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
             isDarkMode ? 'text-white' : 'text-[#0C0E16]'
           } `}
         >
           Filter by status
+        </span>
+
+        <span
+          className={`block sm:hidden font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+            isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+          } `}
+        >
+          Filter
         </span>
         <motion.div
           initial={false}

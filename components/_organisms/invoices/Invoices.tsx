@@ -118,7 +118,7 @@ export default function Invoices() {
   };
 
   return (
-    <div className='relative z-10 max-w-[730px] w-full mt-[64px]'>
+    <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[64px] max-lg:mt-[55px]'>
       {invoices.length === 0 ? (
         <InvoicesEmpty />
       ) : (
@@ -142,13 +142,13 @@ export default function Invoices() {
                 variants={itemVariants}
                 style={{ overflow: 'hidden' }}
                 onClick={(e) => handleInvoiceClick(e, item.id)}
-                className={`w-full h-[72px] mb-[16px] pt-[30px] pb-[27px] pr-[24px] pl-[32px] rounded-[8px] flex items-center justify-between
+                className={`relative w-full h-[327x] sm:h-[72px] mb-[16px] max-sm:py-[25px] sm:pt-[30px]  max-sm:px-[24px] sm:pb-[27px] lg:pr-[24px] sm:max-lg:px-[24px] lg:pl-[32px] rounded-[8px] flex max-sm:flex-col items-center justify-between
                   ${isDarkMode ? 'bg-[#1E2139]' : 'bg-white'}
                   ${item.status === 'Draft' ? '' : 'drop-shadow-xl'}
-                  border-[1px] border-transparent hover:border-[#7C5DFA] transition-colors duration-500 cursor-pointer`}
+                  border-[1px] border-transparent hover:border-[#7C5DFA] transition-colors duration-500 cursor-pointer `}
               >
-                <div className='flex items-center gap-[51px]'>
-                  <div className='flex items-center gap-[28px]'>
+                <div className='max-sm:w-full max-sm:justify-between flex  sm:items-center max-sm:mb-[9px] gap-[51px]'>
+                  <div className='flex max-sm:flex-col sm:items-center max-sm:gap-[24px] sm:gap-[28px]'>
                     <span
                       className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
                         isDarkMode ? 'text-white' : 'text-[#0C0E16]'
@@ -160,7 +160,7 @@ export default function Invoices() {
                       {item.id}
                     </span>
                     <span
-                      className={`font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
+                      className={`max-lg:min-w-[55px] max-lg:text-center font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
                         isDarkMode ? 'text-[#DFE3FA]' : 'text-[#888EB0]'
                       } transition-colors duration-1000`}
                     >
@@ -168,7 +168,7 @@ export default function Invoices() {
                     </span>
                   </div>
                   <span
-                    className={`font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
+                    className={`max-lg:text-center font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
                       isDarkMode ? 'text-[#DFE3FA]' : 'text-[#888EB0]'
                     } transition-colors duration-1000`}
                   >
@@ -176,23 +176,29 @@ export default function Invoices() {
                   </span>
                 </div>
 
-                <div className='flex items-center gap-[40px]'>
+                <div className='max-sm:w-full max-sm:justify-between flex items-center gap-[40px]'>
                   <span
-                    className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+                    className={`max-lg:min-w-[71px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
                       isDarkMode ? 'text-white' : 'text-[#0C0E16]'
                     } transition-colors duration-1000`}
                   >
                     $ {item.amount}
                   </span>
                   <div className='flex items-center gap-[20px]'>
-                    <StatusIcon item={item} />
+                    <div className='hidden sm:block'>
+                      <StatusIcon item={item} />
+                    </div>
                     <Image
                       src='assets/svg/arrow_right.svg'
                       width={8}
                       height={4}
                       alt='arrow to open'
+                      className='max-sm:hidden '
                     />
                   </div>
+                </div>
+                <div className='block sm:hidden absolute bottom-[28px] right-[24px]'>
+                  <StatusIcon item={item} />
                 </div>
               </motion.div>
             ))}

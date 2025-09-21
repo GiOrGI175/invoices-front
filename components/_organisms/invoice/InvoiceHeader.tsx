@@ -53,11 +53,11 @@ export default function InvoiceHeader() {
         duration: 1.2,
         stiffness: 120,
       }}
-      className={`max-w-[730px] w-full h-[88px] rounded-[8px] px-[32px] flex justify-between items-center drop-shadow-xl ${
+      className={`lg:max-w-[730px] max-lg:max-w-[688px] w-full h-[88px] rounded-[8px] px-[24px] sm:px-[32px] flex justify-between items-center drop-shadow-xl ${
         isDarkMode ? 'bg-[#1E2139]' : 'bg-[#FFFFFF]'
       } transition-colors duration-1000`}
     >
-      <div className='flex items-center'>
+      <div className='max-sm:w-full  flex items-center max-sm:justify-between'>
         <span
           className={`mr-[20px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]    ${
             isDarkMode ? 'text-[#DFE3FA]' : 'text-[#858BB2]'
@@ -87,7 +87,7 @@ export default function InvoiceHeader() {
           </span>
         </div>
       </div>
-      <div className='flex gap-[8px]'>
+      <div className='hidden sm:flex gap-[8px]'>
         <InvoiceEdit />
         <div
           onClick={(e) => {

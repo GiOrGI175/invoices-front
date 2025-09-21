@@ -18,11 +18,11 @@ export default function InvoiceCreate() {
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: -8, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.22, 0.28, 0, 1] }}
-          className={`fixed max-w-[719px] w-full h-[100dvh] rounded-[20px] pb-[170px] ${
+          className={`hidden sm:block fixed lg:max-w-[719px] max-lg:max-w-[616px] w-full lg:h-[100dvh] max-lg:h-[calc(100dvh-80px)]  lg:rounded-[20px] max-lg:rounded-tr-[20px] max-lg:rounded-br-[20px] pb-[170px] max-lg:px-[45px] ${
             isDarkMode ? 'bg-[#141625]' : 'bg-white'
           } transition-colors duration-1000 z-30 `}
         >
-          <div className=' max-w-[520px] w-full h-full ml-[159px] mt-[59px] mb-[70px]  overflow-y-scroll scrollbar-custom'>
+          <div className='lg:max-w-[520px] max-lg:max-w-[528px] w-full h-full lg:ml-[159px] mt-[59px] mb-[70px]  overflow-y-scroll scrollbar-custom'>
             <h2
               className={`mb-[46px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
                 isDarkMode ? 'text-white' : 'text-[#0C0E16]'
