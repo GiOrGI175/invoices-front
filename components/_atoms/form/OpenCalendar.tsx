@@ -26,7 +26,7 @@ export default function OpenCalendar() {
   };
 
   return (
-    <div className='relative flex flex-col items-center max-w-[240px] w-full'>
+    <div className='relative flex flex-col items-center max-sm:items-end sm:max-w-[240px] w-full'>
       <label
         htmlFor='payment-terms'
         className={`mb-[9px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] flex self-start ${
@@ -45,7 +45,7 @@ export default function OpenCalendar() {
           placeholder={formatForInput(new Date())}
           value={selectedDate ? formatForInput(selectedDate) : ''}
           readOnly
-          className={`max-w-[240px] w-full h-[48px] p-[20px] pr-[48px] border border-[#DFE3FA] rounded-[4px]
+          className={`sm:max-w-[240px] w-full h-[48px] p-[20px] pr-[48px] border border-[#DFE3FA] rounded-[4px]
                      font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] 
                      focus:outline-none focus:border-[#7C5DFA] cursor-pointer transition-all duration-200 ${
                        isDarkMode

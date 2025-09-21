@@ -12,7 +12,7 @@ export default function CustomDropdown({ name = 'paymentTerms' }) {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
-    <div className='relative flex flex-col items-center max-w-[240px] w-full'>
+    <div className='relative flex flex-col items-center sm:max-w-[240px] w-full'>
       {/* Hidden input რომ React Hook Form-მა იცოდეს ამ ველის შესახებ */}
       <input type='hidden' value={currentValue} />
 
@@ -27,7 +27,7 @@ export default function CustomDropdown({ name = 'paymentTerms' }) {
       <button
         type='button'
         onClick={() => setOpen(!open)}
-        className={`relative max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] text-left
+        className={`relative sm:max-w-[240px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] text-left
                  font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] text-[#0C0E16]
                  focus:outline-none focus:border-[#7C5DFA] transition-all duration-200  ${
                    isDarkMode
