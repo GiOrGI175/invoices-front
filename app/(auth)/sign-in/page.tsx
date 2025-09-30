@@ -2,9 +2,9 @@
 
 export default function page() {
   return (
-    <div className='flex items-center w-full h-[100vh]'>
+    <div className='flex items-center w-full h-[100vh] bg-[#F8F8FB]'>
       <div className='m-auto sm:w-[74%] md:m-auto'>
-        <div className='md:w-[560px] min-w-[280px] md:m-auto rounded-xl bg-white h-[450px] p-8 gap-[32px] flex flex-col'>
+        <div className='md:w-[560px] min-w-[280px] md:m-auto rounded-xl bg-white h-[450px] p-8 gap-[32px] flex flex-col shadow-2xl'>
           <h2 className='text-[32px] font-bold text-[#201F24]'>Login</h2>
           <form
             className='space-y-4 md:space-y-6'
@@ -56,7 +56,7 @@ export default function page() {
 
             <button
               type='submit'
-              className='w-full text-white bg-[#7c5dfa] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+              className='w-full text-white bg-[#7c5dfa] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center  hover:bg-[#9277FF] duration-500 cursor-pointer '
             >
               Login
             </button>
