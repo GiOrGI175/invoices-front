@@ -10,6 +10,9 @@ type UIState = {
 
   isDelete: boolean;
   setIsDelete: (value: boolean) => void;
+
+  isRegLoader: boolean;
+  setIsRegLoader: (value: boolean) => void;
 };
 
 export const useOpen = create<UIState>((set) => ({
@@ -21,4 +24,7 @@ export const useOpen = create<UIState>((set) => ({
 
   isDelete: false,
   setIsDelete: (value) => set({ isDelete: value }),
+
+  isRegLoader: false,
+  setIsRegLoader: (value) => set({ isRegLoader: value }),
 }));
