@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import { useForm, UseFormRegister, FieldErrors } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useOpen } from '@/store/ui';
 
 type RegisterInput = {
   fullName: string;
@@ -36,6 +37,9 @@ interface ApiErrorResponse {
 }
 
 export default function Register({ children }: RegisterProps) {
+  const setIsOverlay = useOpen((state) => state.setIsOverlay);
+  const setIsRegLoader = useOpen((state) => state.setIsRegLoader);
+
   const router = useRouter();
 
   const {
@@ -55,6 +59,9 @@ export default function Register({ children }: RegisterProps) {
 
   const onSubmit = async (data: RegisterInput) => {
     try {
+      setIsOverlay(true);
+      setIsRegLoader(true);
+
       await axios.post('http://localhost:3005/auth/sign-up', data);
 
       reset();
@@ -97,6 +104,9 @@ export default function Register({ children }: RegisterProps) {
           message: error.message || 'სერვერთან კავშირი ვერ დამყარდა',
         });
       }
+    } finally {
+      setIsOverlay(false);
+      setIsRegLoader(false);
     }
   };
 

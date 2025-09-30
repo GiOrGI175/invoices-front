@@ -2,11 +2,11 @@
 
 import { useOpen } from '@/store/ui';
 import { AnimatePresence, motion } from 'framer-motion';
-
-const setIsOverlay = useOpen((state) => state.setIsOverlay);
-const isRegLoader = useOpen((state) => state.isRegLoader);
+import { Loader2 } from 'lucide-react';
 
 export default function RegisterLoader() {
+  const isRegLoader = useOpen((state) => state.isRegLoader);
+
   return (
     <AnimatePresence>
       {isRegLoader && (
@@ -21,7 +21,6 @@ export default function RegisterLoader() {
           aria-modal='true'
           aria-labelledby='confirm-delete-title'
         >
-          {' '}
           <motion.div
             key='confirm-delete-card'
             initial={{ opacity: 0, scale: 0.98 }}
@@ -33,13 +32,17 @@ export default function RegisterLoader() {
               transition-colors duration-1000 bg-white
               '
           >
-            <p className='mb-4 font-league font-medium text-[13px] leading-[22px] tracking-[-0.1px]'>
-              Please wait. Registration/login takes up to 1 minute.
-            </p>
+            <div className='flex flex-col justify-center items-center'>
+              <p className='mb-6 font-league font-medium text-[13px] leading-[22px] tracking-[-0.1px]'>
+                Please wait. Registration/login takes up to 1 minute.
+              </p>
+            </div>
+            <div className='w-full flex justify-center'>
+              <Loader2 className='w-7 h-7 animate-spin' />
+            </div>
           </motion.div>
         </motion.div>
       )}
-      <div></div>
     </AnimatePresence>
   );
 }
