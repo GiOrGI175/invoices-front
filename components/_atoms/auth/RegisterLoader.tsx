@@ -16,7 +16,7 @@ export default function RegisterLoader() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18, ease: [0.22, 0.28, 0, 1] }}
-          className='fixed inset-0 flex items-center justify-center p-4 sm:p-6'
+          className='fixed inset-0 flex items-center justify-center p-4 sm:p-6 z-40'
           role='dialog'
           aria-modal='true'
           aria-labelledby='confirm-delete-title'
