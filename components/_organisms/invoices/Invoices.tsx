@@ -3,81 +3,126 @@
 import InvoicesEmpty from '@/components/_molecules/invoices/InvoicesEmpty';
 import { useDarkMode } from '@/store/darkMode';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import StatusIcon from '@/components/_atoms/invoices/StatusIcon';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import Loader from './Loader';
+import { div } from 'motion/react-m';
+
+type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
+
+interface Address {
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+interface InvoiceItem {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+interface ApiInvoice {
+  _id: string;
+  clientName: string;
+  clientEmail: string;
+  clientAddress: Address;
+  senderAddress: Address;
+  createdAt: string; // ISO
+  paymentDue: string; // ISO
+  paymentTerms: number;
+  description: string;
+  status: ApiInvoiceStatus;
+  items: InvoiceItem[];
+  total: number;
+  user: string;
+  __v: number;
+}
+
+/** UI-ში რაც გჭირდება */
+type UIStatus = 'Draft' | 'Pending' | 'Paid';
+interface UIInvoice {
+  id: string; // from _id
+  dueDate: string; // formatted
+  clientName: string;
+  amount: number; // from total
+  status: UIStatus; // Capitalized
+}
+
+/** Helpers */
+const cap = (s: ApiInvoiceStatus): UIStatus =>
+  (s.charAt(0).toUpperCase() + s.slice(1)) as UIStatus;
+
+const fmtDue = (iso: string) => {
+  try {
+    const d = new Date(iso);
+    // e.g. "Due 19 Aug 2026"
+    return `Due ${d.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    })}`;
+  } catch {
+    return `Due ${iso}`;
+  }
+};
 
 export default function Invoices() {
-  type InvoiceStatus = 'Paid' | 'Pending' | 'Draft';
-  interface Invoice {
-    id: string;
-    dueDate: string;
-    clientName: string;
-    amount: number;
-    status: InvoiceStatus;
-  }
-
-  const seed: Invoice[] = [
-    {
-      id: 'RT3080',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Jensen Huang',
-      amount: 1800.9,
-      status: 'Paid',
-    },
-    {
-      id: 'XM9141',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Alex Grim',
-      amount: 556.0,
-      status: 'Pending',
-    },
-    {
-      id: 'RG0314',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'John Morrison',
-      amount: 14002.33,
-      status: 'Draft',
-    },
-    {
-      id: 'RT2080',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Alysa Werner',
-      amount: 102.04,
-      status: 'Pending',
-    },
-    {
-      id: 'AA1449',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Mellisa Clarke',
-      amount: 4032.33,
-      status: 'Pending',
-    },
-    {
-      id: 'TY9141',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Thomas Wayne',
-      amount: 6155.91,
-      status: 'Pending',
-    },
-    {
-      id: 'FV2353',
-      dueDate: 'Due  19 Aug 2021',
-      clientName: 'Anita Wainwright',
-      amount: 3102.04,
-      status: 'Draft',
-    },
-  ];
-
-  const isDarkMode = useDarkMode((s) => s.isDarkMode);
   const router = useRouter();
+  const isDarkMode = useDarkMode((s) => s.isDarkMode);
 
-  const [invoices, setInvoices] = useState<Invoice[]>(seed);
+  const [invoices, setInvoices] = useState<UIInvoice[]>([]);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [loadeing, setLoading] = useState(true);
+  const [itemLoding, setItemLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const token = Cookies.get('auth_token');
+        if (!token) {
+          router.replace('/sign-in');
+          return;
+        }
+
+        const res = await axios.get<ApiInvoice[]>(
+          'http://localhost:3005/invoice',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        const ui: UIInvoice[] = res.data.map((inv) => ({
+          id: inv._id,
+          dueDate: fmtDue(inv.paymentDue),
+          clientName: inv.clientName,
+          amount: inv.total,
+          status: cap(inv.status),
+        }));
+
+        setInvoices(ui);
+      } catch (error: any) {
+        console.error(error);
+        if (error?.response?.status === 401) {
+          // Cookies.remove('auth_token', { path: '/' });
+          router.replace('/sign-in');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInvoices();
+  }, [router]);
 
   const handleInvoiceClick = (e: React.MouseEvent, invoiceId: string) => {
     e.preventDefault();
+
+    setItemLoading(true);
+
     setRemovingId(invoiceId);
     setInvoices((prev) => prev.filter((i) => i.id !== invoiceId));
   };
@@ -86,40 +131,26 @@ export default function Invoices() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      scale: 0.95,
-    },
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 20,
-      },
+      transition: { type: 'spring', stiffness: 100, damping: 20 },
     },
-    exit: {
-      opacity: 0,
-      x: 24,
-      marginBottom: 0,
-      transition: { duration: 0.9 },
-    },
+    exit: { opacity: 0, x: 24, marginBottom: 0, transition: { duration: 0.9 } },
   };
 
   return (
     <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[64px] max-lg:mt-[55px]'>
-      {invoices.length === 0 ? (
+      {loadeing ? (
+        <Loader />
+      ) : invoices.length === 0 ? (
         <InvoicesEmpty />
       ) : (
         <motion.div
@@ -157,7 +188,7 @@ export default function Invoices() {
                       <span className='font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] text-[#888EB0]'>
                         #
                       </span>
-                      {item.id}
+                      {item.id.slice(-6)}
                     </span>
                     <span
                       className={`max-lg:min-w-[55px] max-lg:text-center font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${
@@ -202,6 +233,12 @@ export default function Invoices() {
                 </div>
               </motion.div>
             ))}
+
+            {itemLoding && (
+              <div className='fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6'>
+                <Loader />
+              </div>
+            )}
           </AnimatePresence>
         </motion.div>
       )}

@@ -18,7 +18,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [router]);
 
-  // არ აჩვენო არაფერი სანამ შემოწმება არ დასრულდება
   if (!mounted) {
     return (
       <div className='flex items-center justify-center h-screen'>
