@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/_organisms/header/Header';
 import localFont from 'next/font/local';
 
 const league = localFont({
@@ -23,10 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={`${league.variable}`}>
-      <body className=''>
-        <Header />
-        {children}
-      </body>
+      <body className=''>{children}</body>
     </html>
   );
 }

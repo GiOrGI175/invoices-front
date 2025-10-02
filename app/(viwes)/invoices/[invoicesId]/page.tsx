@@ -9,13 +9,7 @@ import InvoiceHeader from '@/components/_organisms/invoice/InvoiceHeader';
 import { useDarkMode } from '@/store/darkMode';
 import React from 'react';
 
-export default function InvoicesId({
-  params,
-}: {
-  params: Promise<{ invoicesId: string }>;
-}) {
-  const { invoicesId } = React.use(params);
-
+export default function InvoicesId() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
