@@ -62,7 +62,10 @@ export default function Register({ children }: RegisterProps) {
       setIsOverlay(true);
       setIsRegLoader(true);
 
-      await axios.post('http://localhost:3005/auth/sign-up', data);
+      await axios.post(
+        'https://invoice-back-sqrj.onrender.com/auth/sign-up',
+        data
+      );
 
       reset();
 

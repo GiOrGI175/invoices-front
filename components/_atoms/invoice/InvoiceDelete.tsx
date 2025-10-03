@@ -28,9 +28,12 @@ export default function InvoiceDelete() {
         return;
       }
 
-      await axios.delete(`http://localhost:3005/invoice/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://invoice-back-sqrj.onrender.com/invoice/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       console.log('succes delete');
 

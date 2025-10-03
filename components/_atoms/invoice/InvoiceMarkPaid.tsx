@@ -34,7 +34,7 @@ export default function InvoiceMarkPaid({
       }
 
       await axios.patch(
-        `http://localhost:3005/invoice/${id}`,
+        `https://invoice-back-sqrj.onrender.com/invoice/${id}`,
         { status: 'paid' },
         {
           headers: {

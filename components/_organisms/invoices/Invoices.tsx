@@ -87,7 +87,7 @@ export default function Invoices() {
         }
 
         const res = await axios.get<ApiInvoice[]>(
-          'http://localhost:3005/invoice',
+          'https://invoice-back-sqrj.onrender.com/invoice',
           {
             headers: { Authorization: `Bearer ${token}` },
           }

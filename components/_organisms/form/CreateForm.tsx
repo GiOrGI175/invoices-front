@@ -82,13 +82,16 @@ export default function CreateForm() {
         setLoadErr(null);
 
         const token = Cookies.get('auth_token');
-        const res = await fetch(`http://localhost:3005/invoice/${invoiceId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        });
+        const res = await fetch(
+          `https://invoice-back-sqrj.onrender.com/invoice/${invoiceId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+          }
+        );
 
         if (!res.ok) throw new Error(await res.text());
         const raw = await res.json();

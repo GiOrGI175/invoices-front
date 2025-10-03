@@ -63,7 +63,7 @@ export default function InvoiceHeader() {
         }
 
         const res = await axios.get<ApiInvoice>(
-          `http://localhost:3005/invoice/${id}`,
+          `https://invoice-back-sqrj.onrender.com/invoice/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
