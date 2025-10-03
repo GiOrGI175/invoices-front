@@ -45,6 +45,8 @@ const DEFAULTS: CreateInvoiceT = {
 export default function CreateForm() {
   const setIsCreated = useOpen((s) => s.setIsCreated);
   const setIsEdited = useOpen((s) => s.setIsEdited);
+  const setIsOverlay = useOpen((state) => state.setIsOverlay);
+  const setIsOpen = useOpen((state) => state.setIsOpen);
 
   const params = useParams();
   const pathname = usePathname();
@@ -127,6 +129,8 @@ export default function CreateForm() {
         };
 
         setIsEdited(true);
+        setIsOverlay(false);
+        setIsOpen(false);
 
         if (!cancelled) reset(initialValues);
       } catch (err: unknown) {
@@ -183,6 +187,8 @@ export default function CreateForm() {
 
     console.log('Success', await res.json());
     setIsCreated(true);
+    setIsOverlay(false);
+    setIsOpen(false);
 
     if (!isEdit) reset(DEFAULTS);
   };
