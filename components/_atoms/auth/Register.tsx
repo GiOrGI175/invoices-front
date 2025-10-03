@@ -23,7 +23,7 @@ type ChildrenRender = (ctx: RegisterChildrenProps) => ReactNode;
 
 type RegisterProps = {
   children: ChildrenRender;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: unknown) => void;
   redirectTo?: string;
 };
 
@@ -67,26 +67,26 @@ export default function Register({ children }: RegisterProps) {
       reset();
 
       router.push('/sign-in');
-    } catch (error: any) {
-      console.error('რეგისტრაციის შეცდომა:', error);
+    } catch (err: unknown) {
+      console.error('რეგისტრაციის შეცდომა:', err);
 
-      if (error.response?.data) {
-        const apiError = error.response.data as ApiErrorResponse;
+      if (axios.isAxiosError<ApiErrorResponse>(err)) {
+        const apiError = err.response?.data;
 
-        if (apiError.errors) {
-          if (apiError.errors.fullName) {
+        if (apiError?.errors) {
+          if (apiError.errors.fullName?.[0]) {
             setError('fullName', {
               type: 'server',
               message: apiError.errors.fullName[0],
             });
           }
-          if (apiError.errors.email) {
+          if (apiError.errors.email?.[0]) {
             setError('email', {
               type: 'server',
               message: apiError.errors.email[0],
             });
           }
-          if (apiError.errors.password) {
+          if (apiError.errors.password?.[0]) {
             setError('password', {
               type: 'server',
               message: apiError.errors.password[0],
@@ -96,13 +96,13 @@ export default function Register({ children }: RegisterProps) {
 
         setError('root', {
           type: 'server',
-          message: apiError.message || 'დაფიქსირდა შეცდომა',
+          message: apiError?.message ?? 'დაფიქსირდა შეცდომა',
         });
       } else {
-        setError('root', {
-          type: 'server',
-          message: error.message || 'სერვერთან კავშირი ვერ დამყარდა',
-        });
+        // თუ საერთოდ axios-ის ერორი არაა
+        const msg =
+          err instanceof Error ? err.message : 'სერვერთან კავშირი ვერ დამყარდა';
+        setError('root', { type: 'server', message: msg });
       }
     } finally {
       setIsOverlay(false);

@@ -5,7 +5,6 @@ import CreateForm from '@/components/_organisms/form/CreateForm';
 import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
 import { AnimatePresence, motion } from 'framer-motion';
-import { h2 } from 'motion/react-m';
 import { useParams, usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 

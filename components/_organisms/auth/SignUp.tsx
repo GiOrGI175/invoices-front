@@ -3,7 +3,7 @@
 import Register from '@/components/_atoms/auth/Register';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import CreateAcc from '@/components/_atoms/auth/CreateAcc';
 
 export default function SignUp() {

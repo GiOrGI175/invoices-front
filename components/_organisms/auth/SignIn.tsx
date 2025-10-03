@@ -61,19 +61,17 @@ export default function SignIn() {
 
       reset();
       router.push('/');
-    } catch (error: any) {
-      console.error('რეგისტრაციის შეცდომა:', error);
+    } catch (err: unknown) {
+      if (axios.isAxiosError<ApiErrorResponse>(err)) {
+        const apiError = err.response?.data;
 
-      if (error.response?.data) {
-        const apiError = error.response.data as ApiErrorResponse;
-
-        if (apiError.errors?.email?.[0]) {
+        if (apiError?.errors?.email?.[0]) {
           setError('email', {
             type: 'server',
             message: apiError.errors.email[0],
           });
         }
-        if (apiError.errors?.password?.[0]) {
+        if (apiError?.errors?.password?.[0]) {
           setError('password', {
             type: 'server',
             message: apiError.errors.password[0],
@@ -82,13 +80,12 @@ export default function SignIn() {
 
         setError('root', {
           type: 'server',
-          message: apiError.message || 'დაფიქსირდა შეცდომა',
+          message: apiError?.message ?? 'დაფიქსირდა შეცდომა',
         });
       } else {
-        setError('root', {
-          type: 'server',
-          message: error.message || 'სერვერთან კავშირი ვერ დამყარდა',
-        });
+        const msg =
+          err instanceof Error ? err.message : 'სერვერთან კავშირი ვერ დამყარდა';
+        setError('root', { type: 'server', message: msg });
       }
     } finally {
       setIsOverlay(false);

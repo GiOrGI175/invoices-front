@@ -112,7 +112,7 @@ export default function CreateForm() {
             postCode: raw.clientAddress?.postCode ?? '',
             country: raw.clientAddress?.country ?? '',
           },
-          items: (raw.items ?? []).map((i: any) => ({
+          items: (raw.items ?? []).map((i: InvoiceItem) => ({
             name: i.name ?? '',
             quantity: Number(i.quantity ?? 0),
             price: Number(i.price ?? 0),
@@ -120,8 +120,10 @@ export default function CreateForm() {
         };
 
         if (!cancelled) reset(initialValues);
-      } catch (err: any) {
-        if (!cancelled) setLoadErr(err?.message || 'Failed to load invoice');
+      } catch (err: unknown) {
+        const msg =
+          err instanceof Error ? err.message : 'Failed to load invoice';
+        if (!cancelled) setLoadErr(msg);
       } finally {
         if (!cancelled) setLoading(false);
       }

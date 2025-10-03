@@ -1,6 +1,5 @@
 'use client';
 
-import InvoiceDelete from '@/components/_atoms/invoice/InvoiceDelete';
 import InvoiceEdit from '@/components/_atoms/invoice/InvoiceEdit';
 import InvoiceMarkPaid from '@/components/_atoms/invoice/InvoiceMarkPaid';
 import { useDarkMode } from '@/store/darkMode';
@@ -53,9 +52,6 @@ export default function InvoiceHeader() {
 
   const id = params.invoicesId ?? params.id;
 
-  const cap = (s: ApiInvoiceStatus): UIStatus =>
-    (s.charAt(0).toUpperCase() + s.slice(1)) as UIStatus;
-
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
@@ -75,10 +71,15 @@ export default function InvoiceHeader() {
 
         setInvoice(res.data);
         console.log(res.data);
-      } catch (error: any) {
-        console.error(error);
-        if (error?.response?.status === 401) {
-          router.replace('/sign-in');
+      } catch (err: unknown) {
+        console.error(err);
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            router.replace('/sign-in');
+          }
+        } else {
+          const msg = err instanceof Error ? err.message : 'Unknown error';
+          console.error('Unexpected error while fetching invoice:', msg);
         }
       } finally {
         setLoading(false);
@@ -95,7 +96,13 @@ export default function InvoiceHeader() {
     return <div>Status not found</div>;
   }
 
-  const uiStatus = cap(invoice.status);
+  const toUI = (s: ApiInvoiceStatus): UIStatus =>
+    (s.charAt(0).toUpperCase() + s.slice(1)) as UIStatus;
+
+  const toApi = (s: UIStatus): ApiInvoiceStatus =>
+    s.toLowerCase() as ApiInvoiceStatus;
+
+  const uiStatus = toUI(invoice.status);
 
   return (
     <motion.div
@@ -158,9 +165,7 @@ export default function InvoiceHeader() {
         <InvoiceMarkPaid
           uiStatus={uiStatus}
           onStatusChange={(s) =>
-            setInvoice((prev) =>
-              prev ? { ...prev, status: s.toLowerCase() as any } : prev
-            )
+            setInvoice((prev) => (prev ? { ...prev, status: toApi(s) } : prev))
           }
         />
       </div>
