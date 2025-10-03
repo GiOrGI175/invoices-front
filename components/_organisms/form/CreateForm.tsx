@@ -160,8 +160,8 @@ export default function CreateForm() {
 
     const url =
       isEdit && invoiceId
-        ? `http://localhost:3005/invoice/${invoiceId}`
-        : `http://localhost:3005/invoice`;
+        ? `https://invoice-back-sqrj.onrender.com/invoice/${invoiceId}`
+        : `https://invoice-back-sqrj.onrender.com/invoice`;
     const method = isEdit ? 'PATCH' : 'POST';
 
     const res = await fetch(url, {
