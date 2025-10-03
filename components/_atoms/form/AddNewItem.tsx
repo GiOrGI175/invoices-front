@@ -2,12 +2,18 @@
 
 import { useDarkMode } from '@/store/darkMode';
 
-export default function AddNewItem() {
+type AddNewItemProps = {
+  onClick?: () => void;
+};
+
+export default function AddNewItem({ onClick }: AddNewItemProps) {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
     <div className='w-full h-[48px] mt-[18px] mb-[48px] flex justify-center items-center'>
       <button
+        type='button'
+        onClick={onClick}
         className={`max-w-[350px] w-full h-full rounded-[24px] cursor-pointer bg-transparent ${
           isDarkMode ? ' hover:bg-[#1E2139] ' : ' hover:bg-[#DFE3FA] '
         } transition-colors duration-500`}

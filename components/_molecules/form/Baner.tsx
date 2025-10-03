@@ -16,8 +16,8 @@ export default function Baner() {
         <div>{true && <DiscardInvoice />}</div>
         {true && (
           <div className='flex gap-[8px]'>
-            <SavaAsDraft />
-            <InvoiceSave />
+            <SavaAsDraft formId='invoice-form' />
+            <InvoiceSave formId='invoice-form' />
           </div>
         )}
       </div>

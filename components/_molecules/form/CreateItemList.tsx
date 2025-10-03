@@ -1,21 +1,43 @@
 'use client';
 
+import { useDarkMode } from '@/store/darkMode';
+import { useFormContext, useFieldArray } from 'react-hook-form';
+import type { CreateInvoiceT } from '@/components/_organisms/form/CreateForm';
 import AddNewItem from '@/components/_atoms/form/AddNewItem';
 import ItemDelete from '@/components/_atoms/form/ItemDelete';
-import { useDarkMode } from '@/store/darkMode';
-import { useState } from 'react';
 
 export default function CreateItemList() {
-  const [items, setItems] = useState([
-    {
-      ItemName: '',
-      Qty: 0,
-      Price: 0,
-      Total: 156,
-    },
-  ]);
+  const isDarkMode = useDarkMode((s) => s.isDarkMode);
 
-  const isDarkMode = useDarkMode((state) => state.isDarkMode);
+  const {
+    register,
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext<CreateInvoiceT>();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  });
+
+  const items = watch('items') ?? [];
+
+  const lineTotal = (i: number) => {
+    const q = Math.max(0, Number(items?.[i]?.quantity || 0));
+    const p = Math.max(0, Number(items?.[i]?.price || 0));
+    return q * p;
+  };
+
+  const subTotal = items.reduce((acc, _, i) => acc + lineTotal(i), 0);
+
+  const labelTone = isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]';
+  const inputTone = isDarkMode
+    ? 'bg-[#1E2139] text-white border-[#252945]'
+    : 'bg-transparent text-[#0C0E16] border-[#DFE3FA]';
+  const baseInput =
+    'h-[48px] p-[12px] border rounded-[4px] font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] focus:outline-none focus:border-[#7C5DFA] transition-colors duration-1000';
+  const errorBorder = 'border-[#EC5757]';
 
   return (
     <div className='mt-[35px] max-sm:mb-[22px] sm:mb-[12px]'>
@@ -23,131 +45,166 @@ export default function CreateItemList() {
         Item List
       </span>
 
-      <div>
-        <div className='w-full hidden sm:flex gap-[16px]'>
+      {/* Header (desktop) — ვაჩვენოთ მხოლოდ მაშინ, როცა item-ები არსებობს */}
+      {fields.length > 0 && (
+        <div className='w-full hidden sm:flex gap-[16px] mt-2'>
           <span
-            className={`max-w-[214px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-            } transition-colors duration-1000`}
+            className={`max-w-[214px] w-full mb-[15px] font-league font-medium text-[13px] ${labelTone}`}
           >
             Item Name
           </span>
-
           <span
-            className={`max-w-[46px] w-full mb-[15px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]  ${
-              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-            } transition-colors duration-1000`}
+            className={`max-w-[46px] w-full mb-[15px] font-league font-medium text-[13px] ${labelTone}`}
           >
             Qty.
           </span>
-
           <span
-            className={`max-w-[100px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]  ${
-              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-            } transition-colors duration-1000`}
+            className={`max-w-[100px] w-full mb-[15px] font-league font-medium text-[13px] ${labelTone}`}
           >
             Price
           </span>
-
           <span
-            className={`max-w-[100px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-            } transition-colors duration-1000`}
+            className={`max-w-[100px] w-full mb-[15px] font-league font-medium text-[13px] ${labelTone}`}
           >
             Total
           </span>
         </div>
-        {items.map((item, idx) => (
-          <div key={idx} className='flex max-sm:flex-col gap-[16px]'>
-            <div className='flex flex-col'>
+      )}
+
+      {fields.map((field, idx) => {
+        const nameErr = errors.items?.[idx]?.name?.message as
+          | string
+          | undefined;
+        const qtyErr = errors.items?.[idx]?.quantity?.message as
+          | string
+          | undefined;
+        const priceErr = errors.items?.[idx]?.price?.message as
+          | string
+          | undefined;
+
+        return (
+          <div key={field.id} className='flex max-sm:flex-col gap-[16px]'>
+            {/* Item Name */}
+            <div className='flex flex-col sm:max-w-[214px] w-full'>
               <label
-                className={`flex sm:hidden max-w-[214px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-                  isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-                } transition-colors duration-1000`}
+                className={`flex sm:hidden mb-[9px] font-league font-medium text-[13px] ${labelTone}`}
               >
                 Item Name
               </label>
               <input
-                type='text'
-                id='Item Name'
-                name='Item Name'
-                className={`sm:max-w-[214px] w-full h-[48px] p-[20px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] focus:outline-none focus:border-[#7C5DFA] ${
-              isDarkMode
-                ? 'bg-[#1E2139] text-[#FFFFFF]'
-                : 'bg-transparent text-[#0C0E16]'
-            } transition-colors duration-1000`}
+                placeholder='e.g., Banner design'
+                className={`${baseInput} ${inputTone} ${
+                  nameErr ? errorBorder : ''
+                }`}
+                {...register(`items.${idx}.name`, {
+                  required: 'Name is required',
+                })}
               />
+              {nameErr && (
+                <p className='text-xs text-[#EC5757] mt-1'>{nameErr}</p>
+              )}
             </div>
+
             <div className='max-sm:w-full flex max-sm:justify-between gap-[16px]'>
+              {/* Qty */}
               <div className='flex flex-col'>
                 <label
-                  className={`flex sm:hidden max-w-[214px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-                    isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-                  } transition-colors duration-1000`}
+                  className={`flex sm:hidden mb-[9px] font-league font-medium text-[13px] ${labelTone}`}
                 >
                   Qty.
                 </label>
                 <input
                   type='number'
-                  id='Qty.'
-                  name='Qty.'
-                  className={`sm:max-w-[46px] max-sm:min-w-[64px] w-full h-[48px] p-[10px] border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] focus:outline-none focus:border-[#7C5DFA] appearance-none [-moz-appearance:textfield] ${
-              isDarkMode
-                ? 'bg-[#1E2139] text-[#FFFFFF]'
-                : 'bg-transparent text-[#0C0E16]'
-            } transition-colors duration-1000`}
+                  min={1}
+                  className={`sm:max-w-[46px] max-sm:min-w-[64px] w-full ${baseInput} ${inputTone} ${
+                    qtyErr ? errorBorder : ''
+                  } appearance-none [-moz-appearance:textfield]`}
+                  {...register(`items.${idx}.quantity`, {
+                    valueAsNumber: true,
+                    required: 'Qty required',
+                    min: { value: 1, message: 'Min 1' },
+                  })}
                 />
+                {qtyErr && (
+                  <p className='text-xs text-[#EC5757] mt-1'>{qtyErr}</p>
+                )}
               </div>
 
+              {/* Price */}
               <div className='flex flex-col'>
                 <label
-                  className={`flex sm:hidden max-w-[214px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-                    isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-                  } transition-colors duration-1000`}
+                  className={`flex sm:hidden mb-[9px] font-league font-medium text-[13px] ${labelTone}`}
                 >
                   Price
                 </label>
                 <input
                   type='number'
-                  id='Price'
-                  name='Price'
-                  className={`sm:max-w-[100px] max-sm:min-w-[80px] w-full h-[48px] p-[20px]  border border-[#DFE3FA] rounded-[4px] 
-            font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] focus:outline-none focus:border-[#7C5DFA] appearance-none [-moz-appearance:textfield] ${
-              isDarkMode
-                ? 'bg-[#1E2139] text-[#FFFFFF]'
-                : 'bg-transparent text-[#0C0E16]'
-            } transition-colors duration-1000`}
+                  min={0}
+                  step='0.01'
+                  className={`sm:max-w-[100px] max-sm:min-w-[80px] w-full ${baseInput} ${inputTone} ${
+                    priceErr ? errorBorder : ''
+                  } appearance-none [-moz-appearance:textfield]`}
+                  {...register(`items.${idx}.price`, {
+                    valueAsNumber: true,
+                    required: 'Price required',
+                    min: { value: 0, message: 'Min 0' },
+                  })}
                 />
+                {priceErr && (
+                  <p className='text-xs text-[#EC5757] mt-1'>{priceErr}</p>
+                )}
               </div>
 
+              {/* Total (derived only UI) */}
               <div className='flex flex-col'>
                 <div className='max-w-[100px] w-full sm:h-[48px] max-sm:h-[78px] flex max-sm:flex-col items-center'>
                   <label
-                    className={`flex sm:hidden max-w-[214px] w-full mb-[15px]  font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] ${
-                      isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]'
-                    } transition-colors duration-1000`}
+                    className={`flex sm:hidden mb-[9px] font-league font-medium text-[13px] ${labelTone}`}
                   >
                     Total
                   </label>
                   <span
-                    className={`h-full max-sm:min-w-[80px] flex items-center font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
+                    className={`h-full max-sm:min-w-[80px] flex items-center font-league font-bold text-[15px] tracking-[-0.25px] ${
                       isDarkMode ? 'text-[#DFE3FA]' : 'text-[#888EB0]'
-                    } transition-colors duration-1000`}
+                    }`}
                   >
-                    {item.Total}
+                    {lineTotal(idx).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </span>
                 </div>
               </div>
 
-              <ItemDelete />
+              {/* Delete */}
+              <ItemDelete onClick={() => remove(idx)} />
             </div>
           </div>
-        ))}
+        );
+      })}
+
+      {/* Footer: Add item + Subtotal */}
+      <div className='w-full h-[48px] mt-[18px] mb-[16px] flex justify-between items-center'>
+        <AddNewItem
+          onClick={() => append({ name: '', quantity: 1, price: 0 })}
+        />
+
+        {fields.length > 0 && (
+          <div className='ml-4 text-right'>
+            <span className={`block text-sm ${labelTone}`}>Subtotal</span>
+            <span
+              className={`font-league font-bold text-[16px] ${
+                isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+              }`}
+            >
+              {subTotal.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
+          </div>
+        )}
       </div>
-      {/* ესეგი აქედან როცა შეიქმნება მერე ემატებაა მანმდე სულ ცარილი უნდა იყოს ესდა არ უნდა ჩანდეს ინფუთის ველები */}
-      <AddNewItem />
     </div>
   );
 }

@@ -10,7 +10,6 @@ import StatusIcon from '@/components/_atoms/invoices/StatusIcon';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from './Loader';
-import { div } from 'motion/react-m';
 
 type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
 
@@ -32,8 +31,8 @@ interface ApiInvoice {
   clientEmail: string;
   clientAddress: Address;
   senderAddress: Address;
-  createdAt: string; // ISO
-  paymentDue: string; // ISO
+  createdAt: string;
+  paymentDue: string;
   paymentTerms: number;
   description: string;
   status: ApiInvoiceStatus;
@@ -43,24 +42,21 @@ interface ApiInvoice {
   __v: number;
 }
 
-/** UI-ში რაც გჭირდება */
 type UIStatus = 'Draft' | 'Pending' | 'Paid';
 interface UIInvoice {
-  id: string; // from _id
-  dueDate: string; // formatted
+  id: string;
+  dueDate: string;
   clientName: string;
-  amount: number; // from total
-  status: UIStatus; // Capitalized
+  amount: number;
+  status: UIStatus;
 }
 
-/** Helpers */
 const cap = (s: ApiInvoiceStatus): UIStatus =>
   (s.charAt(0).toUpperCase() + s.slice(1)) as UIStatus;
 
 const fmtDue = (iso: string) => {
   try {
     const d = new Date(iso);
-    // e.g. "Due 19 Aug 2026"
     return `Due ${d.toLocaleDateString('en-GB', {
       day: '2-digit',
       month: 'short',
@@ -108,7 +104,6 @@ export default function Invoices() {
       } catch (error: any) {
         console.error(error);
         if (error?.response?.status === 401) {
-          // Cookies.remove('auth_token', { path: '/' });
           router.replace('/sign-in');
         }
       } finally {

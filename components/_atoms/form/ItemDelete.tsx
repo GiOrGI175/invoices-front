@@ -2,9 +2,19 @@
 
 import Image from 'next/image';
 
-export default function ItemDelete() {
+type ItemDeleteProps = {
+  onClick?: () => void;
+};
+
+export default function ItemDelete({ onClick }: ItemDeleteProps) {
   return (
-    <button className='max-sm:w-[50px] flex items-center justify-center cursor-pointer'>
+    <button
+      type='button'
+      onClick={onClick}
+      className='max-sm:w-[50px] flex items-center justify-center cursor-pointer'
+      aria-label='Remove item'
+      title='Remove item'
+    >
       <Image
         src='/assets/svg/trash_delete.svg'
         width={12}
