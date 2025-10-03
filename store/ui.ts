@@ -13,6 +13,12 @@ type UIState = {
 
   isRegLoader: boolean;
   setIsRegLoader: (value: boolean) => void;
+
+  isCreated: boolean;
+  setIsCreated: (value: boolean) => void;
+
+  isEdited: boolean;
+  setIsEdited: (value: boolean) => void;
 };
 
 export const useOpen = create<UIState>((set) => ({
@@ -27,4 +33,10 @@ export const useOpen = create<UIState>((set) => ({
 
   isRegLoader: false,
   setIsRegLoader: (value) => set({ isRegLoader: value }),
+
+  isCreated: false,
+  setIsCreated: (value) => set({ isCreated: value }),
+
+  isEdited: false,
+  setIsEdited: (value) => set({ isEdited: value }),
 }));

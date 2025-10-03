@@ -8,6 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import BillFrom from '../../_molecules/form/BillFrom';
 import BillTo from '../../_molecules/form/BillTo';
 import CreateItemList from '../../_molecules/form/CreateItemList';
+import { useOpen } from '@/store/ui';
 
 type InvoiceItem = { name: string; quantity: number; price: number };
 type Address = {
@@ -42,6 +43,9 @@ const DEFAULTS: CreateInvoiceT = {
 };
 
 export default function CreateForm() {
+  const setIsCreated = useOpen((s) => s.setIsCreated);
+  const setIsEdited = useOpen((s) => s.setIsEdited);
+
   const params = useParams();
   const pathname = usePathname();
 
@@ -122,6 +126,8 @@ export default function CreateForm() {
           })),
         };
 
+        setIsEdited(true);
+
         if (!cancelled) reset(initialValues);
       } catch (err: unknown) {
         const msg =
@@ -176,6 +182,7 @@ export default function CreateForm() {
     }
 
     console.log('Success', await res.json());
+    setIsCreated(true);
 
     if (!isEdit) reset(DEFAULTS);
   };

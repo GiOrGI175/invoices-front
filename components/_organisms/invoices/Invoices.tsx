@@ -11,6 +11,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from './Loader';
 import { useInvoiceFilter } from '@/store/filter';
+import { useOpen } from '@/store/ui';
 
 export type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
 
@@ -72,58 +73,69 @@ export default function Invoices() {
   const router = useRouter();
   const isDarkMode = useDarkMode((s) => s.isDarkMode);
 
+  const setIsCreated = useOpen((s) => s.setIsCreated);
+  const isCreated = useOpen((s) => s.isCreated);
+
   const [invoices, setInvoices] = useState<UIInvoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [itemLoading, setItemLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchInvoices = async () => {
-      try {
-        const token = Cookies.get('auth_token');
-        if (!token) {
-          router.replace('/sign-in');
-          return;
-        }
-
-        const res = await axios.get<ApiInvoice[]>(
-          'https://invoice-back-sqrj.onrender.com/invoice',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-
-        const ui: UIInvoice[] = res.data.map((inv) => ({
-          id: inv._id,
-          dueDate: fmtDue(inv.paymentDue),
-          clientName: inv.clientName,
-          amount: inv.total,
-          status: cap(inv.status),
-        }));
-
-        setInvoices(ui);
-      } catch (err: unknown) {
-        console.error(err);
-
-        if (axios.isAxiosError(err)) {
-          if (err.response?.status === 401) {
-            router.replace('/sign-in');
-          } else {
-            console.error(
-              'Failed to fetch invoices:',
-              err.response?.status,
-              err.response?.data
-            );
-          }
-        } else {
-          const msg = err instanceof Error ? err.message : 'Unknown error';
-          console.error('Unexpected error while fetching invoices:', msg);
-        }
-      } finally {
-        setLoading(false);
+  const fetchInvoices = async () => {
+    try {
+      const token = Cookies.get('auth_token');
+      if (!token) {
+        router.replace('/sign-in');
+        return;
       }
-    };
+
+      const res = await axios.get<ApiInvoice[]>(
+        'https://invoice-back-sqrj.onrender.com/invoice',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const ui: UIInvoice[] = res.data.map((inv) => ({
+        id: inv._id,
+        dueDate: fmtDue(inv.paymentDue),
+        clientName: inv.clientName,
+        amount: inv.total,
+        status: cap(inv.status),
+      }));
+
+      setInvoices(ui);
+    } catch (err: unknown) {
+      console.error(err);
+
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401) {
+          router.replace('/sign-in');
+        } else {
+          console.error(
+            'Failed to fetch invoices:',
+            err.response?.status,
+            err.response?.data
+          );
+        }
+      } else {
+        const msg = err instanceof Error ? err.message : 'Unknown error';
+        console.error('Unexpected error while fetching invoices:', msg);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchInvoices();
   }, [router]);
+
+  useEffect(() => {
+    if (isCreated) {
+      fetchInvoices();
+      setIsCreated(false);
+    }
+  }, [isCreated]);
 
   const selected = useInvoiceFilter((s) => s.selected);
 
