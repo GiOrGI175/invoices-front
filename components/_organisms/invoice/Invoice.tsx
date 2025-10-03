@@ -85,10 +85,22 @@ export default function Invoice() {
         );
 
         setInvoice(res.data);
-      } catch (error: any) {
-        console.error(error);
-        if (error?.response?.status === 401) {
-          router.replace('/sign-in');
+      } catch (err: unknown) {
+        console.error(err);
+
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            router.replace('/sign-in');
+          } else {
+            console.error(
+              'Failed to fetch invoice:',
+              err.response?.status,
+              err.response?.data
+            );
+          }
+        } else {
+          const msg = err instanceof Error ? err.message : 'Unknown error';
+          console.error('Unexpected error while fetching invoice:', msg);
         }
       } finally {
         setLoading(false);

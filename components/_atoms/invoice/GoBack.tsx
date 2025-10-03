@@ -1,7 +1,6 @@
 'use client';
 
 import { useDarkMode } from '@/store/darkMode';
-import { div } from 'motion/react-m';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';

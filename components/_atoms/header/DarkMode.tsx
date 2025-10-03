@@ -1,4 +1,3 @@
-import { useOpen } from '@/store/ui';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDarkMode } from '@/store/darkMode';

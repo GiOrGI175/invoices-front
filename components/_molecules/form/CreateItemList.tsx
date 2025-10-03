@@ -29,8 +29,6 @@ export default function CreateItemList() {
     return q * p;
   };
 
-  const subTotal = items.reduce((acc, _, i) => acc + lineTotal(i), 0);
-
   const labelTone = isDarkMode ? 'text-[#DFE3FA]' : 'text-[#7E88C3]';
   const inputTone = isDarkMode
     ? 'bg-[#1E2139] text-white border-[#252945]'

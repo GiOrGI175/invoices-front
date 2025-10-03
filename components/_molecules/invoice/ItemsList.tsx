@@ -12,7 +12,6 @@ type InvoiceItem = {
 export default function ItemsList({
   items,
   total,
-  status, // თუ გინდა, შეგიძლია გამოიყენო სადმე ჰედერზე
 }: {
   items: InvoiceItem[];
   total: number;

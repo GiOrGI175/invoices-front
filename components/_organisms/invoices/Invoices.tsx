@@ -102,10 +102,23 @@ export default function Invoices() {
         }));
 
         setInvoices(ui);
-      } catch (error: any) {
-        console.error(error);
-        if (error?.response?.status === 401) {
-          router.replace('/sign-in');
+      } catch (err: unknown) {
+        console.error(err);
+
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            router.replace('/sign-in');
+          } else {
+            // სურვილით: სხვა სტატუსების ჰენდლინგი
+            console.error(
+              'Failed to fetch invoices:',
+              err.response?.status,
+              err.response?.data
+            );
+          }
+        } else {
+          const msg = err instanceof Error ? err.message : 'Unknown error';
+          console.error('Unexpected error while fetching invoices:', msg);
         }
       } finally {
         setLoading(false);

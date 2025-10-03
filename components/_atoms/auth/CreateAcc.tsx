@@ -1,6 +1,5 @@
 'use client';
 
-import { useOpen } from '@/store/ui';
 import { Loader2 } from 'lucide-react';
 
 type CreateAccPropsT = {
@@ -8,9 +7,6 @@ type CreateAccPropsT = {
 };
 
 export default function CreateAcc({ isSubmitting }: CreateAccPropsT) {
-  const setIsOverlay = useOpen((state) => state.setIsOverlay);
-  const setIsRegLoader = useOpen((state) => state.setIsRegLoader);
-
   return (
     <button
       type='submit'

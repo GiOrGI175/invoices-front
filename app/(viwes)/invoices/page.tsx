@@ -5,7 +5,7 @@ import Invoices from '@/components/_organisms/invoices/Invoices';
 import InvoicesHeader from '@/components/_organisms/invoices/InvoicesHeader';
 import { useDarkMode } from '@/store/darkMode';
 
-export default function invoices() {
+export default function Invoicess() {
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
   return (
