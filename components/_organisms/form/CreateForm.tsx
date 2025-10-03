@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -53,6 +53,8 @@ export default function CreateForm() {
     const match = pathname?.match(/\/invoices\/([^\/]+)/);
     return match?.[1];
   }, [params, pathname]);
+
+  const router = useRouter();
 
   const isEdit = useMemo(() => Boolean(invoiceId), [invoiceId]);
 
@@ -176,6 +178,9 @@ export default function CreateForm() {
     }
 
     console.log('Success', await res.json());
+
+    router.push('/invoices');
+
     if (!isEdit) reset(DEFAULTS);
   };
 
