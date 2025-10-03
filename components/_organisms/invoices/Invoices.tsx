@@ -73,9 +73,8 @@ export default function Invoices() {
   const isDarkMode = useDarkMode((s) => s.isDarkMode);
 
   const [invoices, setInvoices] = useState<UIInvoice[]>([]);
-  const [removingId, setRemovingId] = useState<string | null>(null);
-  const [loadeing, setLoading] = useState(true);
-  const [itemLoding, setItemLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [itemLoading, setItemLoading] = useState(false);
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -109,7 +108,6 @@ export default function Invoices() {
           if (err.response?.status === 401) {
             router.replace('/sign-in');
           } else {
-            // სურვილით: სხვა სტატუსების ჰენდლინგი
             console.error(
               'Failed to fetch invoices:',
               err.response?.status,
@@ -138,11 +136,9 @@ export default function Invoices() {
 
   const handleInvoiceClick = (e: React.MouseEvent, invoiceId: string) => {
     e.preventDefault();
-
     setItemLoading(true);
-
-    setRemovingId(invoiceId);
-    setInvoices((prev) => prev.filter((i) => i.id !== invoiceId));
+    // აბსოლუტური ბილდი — ყოველთვის იმუშავებს სწორად
+    router.push(`/invoices/${invoiceId}`);
   };
 
   const containerVariants: Variants = {
@@ -161,12 +157,17 @@ export default function Invoices() {
       scale: 1,
       transition: { type: 'spring', stiffness: 100, damping: 20 },
     },
-    exit: { opacity: 0, x: 24, marginBottom: 0, transition: { duration: 0.9 } },
+    exit: {
+      opacity: 0,
+      x: 24,
+      marginBottom: 0,
+      transition: { duration: 0.35 },
+    },
   };
 
   return (
     <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[64px] max-lg:mt-[55px]'>
-      {loadeing ? (
+      {loading ? (
         <Loader />
       ) : visibleInvoices.length === 0 ? (
         <InvoicesEmpty />
@@ -176,14 +177,7 @@ export default function Invoices() {
           initial='hidden'
           animate='visible'
         >
-          <AnimatePresence
-            onExitComplete={() => {
-              if (removingId) {
-                router.push(`invoices/${removingId}`);
-                setRemovingId(null);
-              }
-            }}
-          >
+          <AnimatePresence>
             {visibleInvoices.map((item) => (
               <motion.div
                 key={item.id}
@@ -191,12 +185,12 @@ export default function Invoices() {
                 variants={itemVariants}
                 style={{ overflow: 'hidden' }}
                 onClick={(e) => handleInvoiceClick(e, item.id)}
-                className={`relative w-full h-[327x] sm:h-[72px] mb-[16px] max-sm:py-[25px] sm:pt-[30px]  max-sm:px-[24px] sm:pb-[27px] lg:pr-[24px] sm:max-lg:px-[24px] lg:pl-[32px] rounded-[8px] flex max-sm:flex-col items-center justify-between
+                className={`relative w-full h-[327px] sm:h-[72px] mb-[16px] max-sm:py-[25px] sm:pt-[30px] max-sm:px-[24px] sm:pb-[27px] lg:pr-[24px] sm:max-lg:px-[24px] lg:pl-[32px] rounded-[8px] flex max-sm:flex-col items-center justify-between
                   ${isDarkMode ? 'bg-[#1E2139]' : 'bg-white'}
                   ${item.status === 'Draft' ? '' : 'drop-shadow-xl'}
-                  border-[1px] border-transparent hover:border-[#7C5DFA] transition-colors duration-500 cursor-pointer `}
+                  border-[1px] border-transparent hover:border-[#7C5DFA] transition-colors duration-500 cursor-pointer`}
               >
-                <div className='max-sm:w-full max-sm:justify-between flex  sm:items-center max-sm:mb-[9px] gap-[51px]'>
+                <div className='max-sm:w-full max-sm:justify-between flex sm:items-center max-sm:mb-[9px] gap-[51px]'>
                   <div className='flex max-sm:flex-col sm:items-center max-sm:gap-[24px] sm:gap-[28px]'>
                     <span
                       className={`font-league font-bold text-[15px] leading-[15px] tracking-[-0.25px] ${
@@ -238,11 +232,11 @@ export default function Invoices() {
                       <StatusIcon item={item} />
                     </div>
                     <Image
-                      src='assets/svg/arrow_right.svg'
+                      src='/assets/svg/arrow_right.svg'
                       width={8}
                       height={4}
                       alt='arrow to open'
-                      className='max-sm:hidden '
+                      className='max-sm:hidden'
                     />
                   </div>
                 </div>
@@ -252,7 +246,7 @@ export default function Invoices() {
               </motion.div>
             ))}
 
-            {itemLoding && (
+            {itemLoading && (
               <div className='fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6'>
                 <Loader />
               </div>
