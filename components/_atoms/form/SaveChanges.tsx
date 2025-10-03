@@ -6,7 +6,7 @@ type Props = {
   formId: string;
 };
 
-export default function SavaAsDraft({ formId }: Props) {
+export default function SaveChanges({ formId }: Props) {
   const setIsOverlay = useOpen((state) => state.setIsOverlay);
   const setIsOpen = useOpen((state) => state.setIsOpen);
 
@@ -17,12 +17,12 @@ export default function SavaAsDraft({ formId }: Props) {
         setIsOpen(false);
       }}
       type='submit'
+      data-action='send'
       form={formId}
-      data-action='draft'
-      className='w-[128px] h-[48px] rounded-[24px] bg-[#373B53] transition-colors hover:bg-[#0C0E16] duration-500 cursor-pointer'
+      className='w-[128px] h-[48px] rounded-[24px] bg-[#7C5DFA] hover:bg-[#9277FF] transition-colors duration-500 cursor-pointer'
     >
-      <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#888EB0]'>
-        Save as Draft
+      <span className='font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px] text-[#FFFFFF]'>
+        Save Changes
       </span>
     </button>
   );

@@ -3,8 +3,23 @@
 import DiscardInvoice from '@/components/_atoms/form/DiscardInvoice';
 import InvoiceSave from '@/components/_atoms/form/InvoiceSave';
 import SavaAsDraft from '@/components/_atoms/form/SavaAsDraft';
+import SaveChanges from '@/components/_atoms/form/SaveChanges';
+import { useParams, usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 
 export default function Baner() {
+  const params = useParams();
+  const pathname = usePathname();
+
+  const invoiceId = useMemo(() => {
+    if (params?.id) {
+      return params.id as string;
+    }
+
+    const match = pathname?.match(/\/invoices\/([^\/]+)/);
+    return match?.[1];
+  }, [params, pathname]);
+
   return (
     <div
       className='sm:absolute sm:bottom-0 sm:right-0 max-w-[719px] w-full h-[110px] 
@@ -13,8 +28,12 @@ export default function Baner() {
     >
       {' '}
       <div className='max-w-[504px] w-full flex justify-between'>
-        <div>{true && <DiscardInvoice />}</div>
-        {true && (
+        <div>
+          <DiscardInvoice />
+        </div>
+        {invoiceId ? (
+          <SaveChanges formId='invoice-form' />
+        ) : (
           <div className='flex gap-[8px]'>
             <SavaAsDraft formId='invoice-form' />
             <InvoiceSave formId='invoice-form' />

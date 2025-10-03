@@ -5,10 +5,25 @@ import CreateForm from '@/components/_organisms/form/CreateForm';
 import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
 import { AnimatePresence, motion } from 'framer-motion';
+import { h2 } from 'motion/react-m';
+import { useParams, usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 
 export default function InvoiceCreate() {
   const isOpen = useOpen((state) => state.isOpen);
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
+
+  const params = useParams();
+  const pathname = usePathname();
+
+  const invoiceId = useMemo(() => {
+    if (params?.id) {
+      return params.id as string;
+    }
+
+    const match = pathname?.match(/\/invoices\/([^\/]+)/);
+    return match?.[1];
+  }, [params, pathname]);
 
   return (
     <AnimatePresence>
@@ -23,13 +38,23 @@ export default function InvoiceCreate() {
           } transition-colors duration-1000 z-30 `}
         >
           <div className='lg:max-w-[520px] max-lg:max-w-[528px] w-full h-full lg:ml-[159px] mt-[59px] mb-[70px]  overflow-y-scroll scrollbar-custom'>
-            <h2
-              className={`mb-[46px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
-                isDarkMode ? 'text-white' : 'text-[#0C0E16]'
-              } transition-colors duration-1000`}
-            >
-              New Invoice
-            </h2>
+            {invoiceId ? (
+              <h2
+                className={`mb-[46px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
+                  isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+                } transition-colors duration-1000`}
+              >
+                Edit Invoice
+              </h2>
+            ) : (
+              <h2
+                className={`mb-[46px] font-league font-bold text-[24px] leading-[32px] tracking-[-0.5px]  ${
+                  isDarkMode ? 'text-white' : 'text-[#0C0E16]'
+                } transition-colors duration-1000`}
+              >
+                New Invoice
+              </h2>
+            )}
             <CreateForm />
           </div>
           <Baner />

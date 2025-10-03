@@ -9,7 +9,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from '../invoices/Loader';
 
-/* ==== Types ==== */
 type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
 
 interface Address {
@@ -24,7 +23,8 @@ interface InvoiceItem {
   price: number;
   total: number;
 }
-interface ApiInvoice {
+
+export interface ApiInvoice {
   _id: string;
   clientName: string;
   clientEmail: string;
@@ -41,7 +41,6 @@ interface ApiInvoice {
   __v: number;
 }
 
-/* ==== Helpers ==== */
 const cap = (s: ApiInvoiceStatus) =>
   (s.charAt(0).toUpperCase() + s.slice(1)) as 'Draft' | 'Pending' | 'Paid';
 
@@ -63,7 +62,6 @@ export default function Invoice() {
   const router = useRouter();
   const params = useParams<{ invoicesId?: string; id?: string }>();
 
-  // მოერგე შენს როუტს: e.g. /invoices/[invoicesId]
   const id = params.invoicesId ?? params.id;
 
   const [invoice, setInvoice] = useState<ApiInvoice | null>(null);
@@ -106,13 +104,12 @@ export default function Invoice() {
   if (!invoice) {
     return (
       <div className='flex items-center justify-center h-64'>
-        Invoice not found
+        Invoice is deleted
       </div>
     );
   }
 
-  // UI მონაცემები
-  const uiIdShort = `#${invoice._id.slice(-6)}`;
+  const uiIdShort = invoice._id.slice(-6);
   const statusCap = cap(invoice.status);
   const createdAt = fmtDate(invoice.createdAt);
   const paymentDue = fmtDate(invoice.paymentDue);
@@ -134,7 +131,7 @@ export default function Invoice() {
             } transition-colors duration-1000`}
           >
             <span className='text-[#888EB0]'>#</span>
-            {invoice._id.slice(-6)}
+            {uiIdShort}
           </span>
           <p
             className={`mt-[7px] font-league font-medium text-[15px] leading-[15px] tracking-[-0.1px] ${

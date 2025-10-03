@@ -188,22 +188,6 @@ export default function CreateItemList() {
         <AddNewItem
           onClick={() => append({ name: '', quantity: 1, price: 0 })}
         />
-
-        {fields.length > 0 && (
-          <div className='ml-4 text-right'>
-            <span className={`block text-sm ${labelTone}`}>Subtotal</span>
-            <span
-              className={`font-league font-bold text-[16px] ${
-                isDarkMode ? 'text-white' : 'text-[#0C0E16]'
-              }`}
-            >
-              {subTotal.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );

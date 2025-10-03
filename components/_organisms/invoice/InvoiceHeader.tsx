@@ -6,15 +6,18 @@ import InvoiceMarkPaid from '@/components/_atoms/invoice/InvoiceMarkPaid';
 import { useDarkMode } from '@/store/darkMode';
 import { useOpen } from '@/store/ui';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { useParams, useRouter } from 'next/navigation';
+import axios from 'axios';
+import { ApiInvoice } from './Invoice';
+import { ApiInvoiceStatus, UIStatus } from '../invoices/Invoices';
+import Loader from '../invoices/Loader';
+import DeleteBtn from '@/components/_atoms/invoice/DeleteBtn';
 
 export default function InvoiceHeader() {
-  const item = {
-    id: 'RT3080',
-    dueDate: 'Due  19 Aug 2021',
-    clientName: 'Jensen Huang',
-    amount: 1800.9,
-    status: 'Paid',
-  };
+  const [invoice, setInvoice] = useState<ApiInvoice | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const statusColors: Record<string, string> = {
     Paid: 'bg-[#33D69F]',
@@ -44,6 +47,56 @@ export default function InvoiceHeader() {
   const setIsDelete = useOpen((state) => state.setIsDelete);
   const isDarkMode = useDarkMode((state) => state.isDarkMode);
 
+  const router = useRouter();
+
+  const params = useParams<{ invoicesId?: string; id?: string }>();
+
+  const id = params.invoicesId ?? params.id;
+
+  const cap = (s: ApiInvoiceStatus): UIStatus =>
+    (s.charAt(0).toUpperCase() + s.slice(1)) as UIStatus;
+
+  useEffect(() => {
+    const fetchInvoice = async () => {
+      try {
+        if (!id) return;
+        const token = Cookies.get('auth_token');
+        if (!token) {
+          router.replace('/sign-in');
+          return;
+        }
+
+        const res = await axios.get<ApiInvoice>(
+          `http://localhost:3005/invoice/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setInvoice(res.data);
+        console.log(res.data);
+      } catch (error: any) {
+        console.error(error);
+        if (error?.response?.status === 401) {
+          router.replace('/sign-in');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInvoice();
+  }, [id, router]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!invoice) {
+    return <div>Status not found</div>;
+  }
+
+  const uiStatus = cap(invoice.status);
+
   return (
     <motion.div
       initial={{ y: -50, opacity: 0 }}
@@ -58,37 +111,41 @@ export default function InvoiceHeader() {
       } transition-colors duration-1000`}
     >
       <div className='max-sm:w-full  flex items-center max-sm:justify-between'>
-        <span
-          className={`mr-[20px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]    ${
-            isDarkMode ? 'text-[#DFE3FA]' : 'text-[#858BB2]'
-          } transition-colors duration-1000`}
-        >
-          Status
-        </span>
+        {loading ? (
+          <span className='inline-flex items-center gap-2'>
+            <span className='inline-block h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin' />
+          </span>
+        ) : (
+          <span
+            className={`mr-[20px] font-league font-medium text-[13px] leading-[15px] tracking-[-0.1px]    ${
+              isDarkMode ? 'text-[#DFE3FA]' : 'text-[#858BB2]'
+            } transition-colors duration-1000`}
+          >
+            Status
+          </span>
+        )}
         <div
-          className={`w-[104px] h-[40px] rounded-[6px] flex items-center justify-center ${
-            statusBgColors[item.status]
-          } `}
+          className={`w-[104px] h-[40px] rounded-[6px] flex items-center justify-center ${statusBgColors[uiStatus]} `}
         >
           <div
             className={`w-[8px] h-[8px] mr-[8px] rounded-full 
                   ${
                     isDarkMode
-                      ? ` ${statusDarkColors[item.status]}`
-                      : `${statusColors[item.status]}`
+                      ? ` ${statusDarkColors[uiStatus]}`
+                      : `${statusColors[uiStatus]}`
                   } transition-colors duration-1000`}
           />
           <span
             className={`font-league   text-center font-bold text-[15px] leading-[15px] tracking-[-0.25px]  ${
-              isDarkMode ? `${statusTextColors[item.status]}` : 'text-[#0C0E16]'
+              isDarkMode ? `${statusTextColors[uiStatus]}` : 'text-[#0C0E16]'
             } transition-colors duration-1000`}
           >
-            {item.status}
+            {uiStatus}
           </span>
         </div>
       </div>
       <div className='hidden sm:flex gap-[8px]'>
-        <InvoiceEdit />
+        {uiStatus === 'Draft' && <InvoiceEdit />}
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -96,9 +153,16 @@ export default function InvoiceHeader() {
             setIsDelete(true);
           }}
         >
-          <InvoiceDelete />
+          <DeleteBtn />
         </div>
-        <InvoiceMarkPaid />
+        <InvoiceMarkPaid
+          uiStatus={uiStatus}
+          onStatusChange={(s) =>
+            setInvoice((prev) =>
+              prev ? { ...prev, status: s.toLowerCase() as any } : prev
+            )
+          }
+        />
       </div>
     </motion.div>
   );
