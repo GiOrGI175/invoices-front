@@ -10,6 +10,7 @@ import StatusIcon from '@/components/_atoms/invoices/StatusIcon';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from './Loader';
+import { useInvoiceFilter } from '@/store/filter';
 
 export type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
 
@@ -113,6 +114,15 @@ export default function Invoices() {
     fetchInvoices();
   }, [router]);
 
+  const selected = useInvoiceFilter((s) => s.selected);
+
+  const visibleInvoices = invoices.filter((inv) => {
+    if (selected.length === 0) return true;
+    return selected.includes(
+      inv.status.toLowerCase() as 'draft' | 'pending' | 'paid'
+    );
+  });
+
   const handleInvoiceClick = (e: React.MouseEvent, invoiceId: string) => {
     e.preventDefault();
 
@@ -145,7 +155,7 @@ export default function Invoices() {
     <div className='relative z-10 lg:max-w-[730px] max-lg:max-w-[672px] w-full lg:mt-[64px] max-lg:mt-[55px]'>
       {loadeing ? (
         <Loader />
-      ) : invoices.length === 0 ? (
+      ) : visibleInvoices.length === 0 ? (
         <InvoicesEmpty />
       ) : (
         <motion.div
@@ -161,7 +171,7 @@ export default function Invoices() {
               }
             }}
           >
-            {invoices.map((item) => (
+            {visibleInvoices.map((item) => (
               <motion.div
                 key={item.id}
                 layout
