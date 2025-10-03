@@ -11,7 +11,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from './Loader';
 
-type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
+export type ApiInvoiceStatus = 'draft' | 'pending' | 'paid';
 
 interface Address {
   street: string;
@@ -42,7 +42,7 @@ interface ApiInvoice {
   __v: number;
 }
 
-type UIStatus = 'Draft' | 'Pending' | 'Paid';
+export type UIStatus = 'Draft' | 'Pending' | 'Paid';
 interface UIInvoice {
   id: string;
   dueDate: string;
