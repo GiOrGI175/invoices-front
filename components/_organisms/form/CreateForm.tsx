@@ -129,8 +129,8 @@ export default function CreateForm() {
         };
 
         setIsEdited(true);
-        setIsOverlay(false);
-        setIsOpen(false);
+        // setIsOverlay(false);
+        // setIsOpen(false);
 
         if (!cancelled) reset(initialValues);
       } catch (err: unknown) {
